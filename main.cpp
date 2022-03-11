@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Item.hpp"
 #include "Inventory.hpp"
+#include "Craft.hpp"
 using namespace std;
 
 void giveCommand(Inventory *myInv, string Name, int Qty){
