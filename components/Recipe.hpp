@@ -111,6 +111,14 @@ public:
         return this->numResult;
     }
 
+    int get_row() const {
+        return this->row;
+    }
+
+    int get_col() const {
+        return this->col;
+    }
+    
     void display_recipe() const {
         for (int i = 0; i < this->row; i++) {
             for (int j = 0; j < this->col; j++) {

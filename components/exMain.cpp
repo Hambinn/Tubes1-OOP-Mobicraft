@@ -6,6 +6,9 @@
 #include "Inventory.hpp"
 #include "Craft.hpp"
 #include "Recipe.hpp"
+#include <fstream>
+#include<dirent.h>
+
 
 using namespace std;
 
@@ -77,7 +80,88 @@ void showCommand(Inventory myInv, Craft myCraft){
 }
 
 void createRecipe() {
-    //Masih cari cara
+    vector<string> recipe_name;
+    vector<string>::iterator it;
+    vector<Recipe> recipe;
+    struct dirent *d;
+    DIR *dr;
+    dr = opendir("../config/recipe");
+    if(dr!=NULL)
+    {
+        for(d=readdir(dr); d!=NULL; d=readdir(dr))
+        {
+            recipe_name.push_back(d->d_name);
+        }
+        closedir(dr);
+    }
+    else
+        cout<<"Error Occurred!" << endl;
+    //delete 2 elemen awal yg tidak digunakan
+    it = recipe_name.begin();
+    recipe_name.erase(it);
+    it = recipe_name.begin();
+    recipe_name.erase(it);
+    string path;
+    for (auto i = recipe_name.begin(); i != recipe_name.end(); i++){
+        path = "../config/recipe/";
+        path += *i;
+        fstream newfile(path); //open a file to perform read operation using file object
+        string tp;
+        getline(newfile,tp);
+        //get the size
+        int row = int(tp[0]) - 48;  //use this because the max size of row is 3
+        int col = int(tp[2]) - 48;  //use this because the max size of column is 3
+        //create recipe
+        Recipe re1(row,col);
+        int cnt_row = 0;
+        //read recipe
+        for (int i = 0; i < row; i++) {
+            getline(newfile,tp);
+            string temp = "";
+            int cnt_col = 0;
+            for (int j = 0; j < tp.length(); j++) {
+                if ((tp[j] == ' ') || (j == tp.length()-1)) {
+                    if (j == tp.length()-1) {
+                        temp += tp[j];
+                        re1.set_recipe(temp,i,cnt_col);
+                        cnt_col++;
+                    }
+                    else{
+                        re1.set_recipe(temp,i,cnt_col);
+                        temp = "";
+                        cnt_col++;
+                    }
+                }
+                else{
+                    temp += tp[j];
+                }
+            }
+        }
+        getline(newfile,tp);
+        string temp = "";
+        string result;
+        int num_of_result;
+        for (int i = 0; i < tp.length(); i++) {
+            if (tp[i] == ' '){
+                result = temp;
+                temp = "";
+            }
+            else if (i == tp.length()-1) {
+                temp += tp[i];
+                num_of_result = stoi(temp);
+            }
+            else{
+                temp += tp[i];
+            }
+        }
+        newfile.close(); //close the file object
+        re1.set_result(result);
+        re1.set_num_of_result(num_of_result);
+        recipe.push_back(re1);
+    }
+    for (auto i = recipe.begin(); i != recipe.end(); i++){
+        i->display_recipe();
+    }
 }
 
 int main(){
