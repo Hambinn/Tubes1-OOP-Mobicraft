@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 #include "components/Item.hpp"
 #include "components/Inventory.hpp"
 using namespace std;
@@ -22,7 +23,7 @@ vector<Item> readItems(string fileName){
     vector<Item> items;
     while (getline(itemConfigaFile, line)){
         Item item;
-        istringstream iline(line);
+        stringstream iline(line);
         vector<string> elementsInVector;
         string elementsInLine;
         int i=0;
