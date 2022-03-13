@@ -38,14 +38,20 @@ void giveCommand(Inventory *myInv, string Name, int Qty){
 }
 
 void moveCommand(Inventory *myInv,  Craft *myCraft, int slot_inv, int N, int* slot_craft){
-    if (myInv->getItem(slot_inv).getQuantity() >= N){
-        int newQty = myInv->getItem(slot_inv).getQuantity() - N;
-        string Name = myInv->getItem(slot_inv).getName();
-        myInv->setItem(slot_inv,1,Name, newQty);
+    try{
+        myCraft->isCraftInvSlotEmty(N, slot_craft);
+        if (myInv->getItem(slot_inv).getQuantity() >= N){
+            int newQty = myInv->getItem(slot_inv).getQuantity() - N;
+            string Name = myInv->getItem(slot_inv).getName();   
+            myInv->setItem(slot_inv,1,Name, newQty);
 
-        for (int i=0; i<N; i++){
-            myCraft->setItem(slot_craft[i],1,Name,1);
+            for (int i=0; i<N; i++){
+                myCraft->setItem(slot_craft[i],1,Name,1);
+            }
+
         }
+    }catch(const char* err){
+        cout << err << endl;
     }
 }
 
@@ -67,38 +73,45 @@ void showCommand(Inventory myInv, Craft myCraft){
             cout << endl;
         }
     }
-    cout << endl;
+    cout << "-------------------------- buat debug --------------------------" << endl;
 }
 
 void createRecipe() {
     //Masih cari cara
 }
-// int main(){
-//     Inventory *mobitaInv = new Inventory();
-//     Craft *mobitaCraft = new Craft();
 
-//     //Give
-//     // GIVE <ITEM_NAME> <ITEM_QTY>
-//     // GIVE OAK_WOOD 10
-//     giveCommand(mobitaInv, "Oak", 15);
-//     giveCommand(mobitaInv, "Stick", 21);
-//     giveCommand(mobitaInv, "Oak", 16);
-//     giveCommand(mobitaInv, "Torch", 65);
-//     giveCommand(mobitaInv, "Stick", 2);
-//     giveCommand(mobitaInv, "Iron", 10);
+int main(){
+    Inventory *mobitaInv = new Inventory();
+    Craft *mobitaCraft = new Craft();
 
-//     //Move
-//     // MOVE <INVENTORY_SLOT_ID> N <CRAFTING_SLOT_ID_1>
-//     // MOVE I0 N C0 C1 C2 ... CN
+    //Give
+    // GIVE <ITEM_NAME> <ITEM_QTY>
+    // GIVE OAK_WOOD 10
+    giveCommand(mobitaInv, "Oak", 15);
+    giveCommand(mobitaInv, "Stick", 21);
+    giveCommand(mobitaInv, "Oak", 16);
+    giveCommand(mobitaInv, "Torch", 65);
+    giveCommand(mobitaInv, "Stick", 2);
+    giveCommand(mobitaInv, "Iron", 10);
 
-//     int slot_craft[2] = {4,7};
-//     moveCommand(mobitaInv, mobitaCraft, 0, 2, slot_craft);
+    //Move
+    // MOVE <INVENTORY_SLOT_ID> N <CRAFTING_SLOT_ID_1>
+    // MOVE I0 N C0 C1 C2 ... CN
+    showCommand(*mobitaInv, *mobitaCraft);
 
-//     int slot_craft2[3] = {0,1,2};
-//     moveCommand(mobitaInv, mobitaCraft, 2, 3, slot_craft2);
+    int slot_craft[2] = {4,7};
+    moveCommand(mobitaInv, mobitaCraft, 0, 2, slot_craft);
+    showCommand(*mobitaInv, *mobitaCraft);
 
-//     //Show
-//     showCommand(*mobitaInv, *mobitaCraft);
+    int slot_craft2[3] = {0,1,2};
+    moveCommand(mobitaInv, mobitaCraft, 2, 3, slot_craft2);
 
-//     return 0;
-// }
+    //Show
+    showCommand(*mobitaInv, *mobitaCraft);
+
+    //gagal mindahin gara2 ada craft table yang udah keisi
+    int slot_craft3[2] = {8,7};
+    moveCommand(mobitaInv, mobitaCraft, 2, 2, slot_craft3);
+
+    return 0;
+} 
