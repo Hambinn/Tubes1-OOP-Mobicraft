@@ -5,6 +5,8 @@
 #include "Item.hpp"
 #include "Inventory.hpp"
 #include "Craft.hpp"
+#include "Recipe.hpp"
+
 using namespace std;
 
 void giveCommand(Inventory *myInv, string Name, int Qty){
@@ -68,6 +70,9 @@ void showCommand(Inventory myInv, Craft myCraft){
     cout << endl;
 }
 
+void createRecipe() {
+    //Masih cari cara
+}
 // int main(){
 //     Inventory *mobitaInv = new Inventory();
 //     Craft *mobitaCraft = new Craft();
