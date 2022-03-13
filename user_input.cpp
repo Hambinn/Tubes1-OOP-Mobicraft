@@ -26,9 +26,9 @@ void getCommand(vector<string> s){
     }else if(s[0] == "USE"){
         cout << "USE" << endl;
     }else if(s[0] == "CRAFT"){
-        cout << "CRAFT";
+        cout << "CRAFT" << endl;
     }else if(s[0] == "EXPORT"){
-        cout << "EXPORT";
+        cout << "EXPORT" << endl;
     }
 }
 
@@ -37,6 +37,8 @@ int main(){
     getline(cin, s);
     vector<string> input = parseInput(s);
     getCommand(input);
+    
+    
     // std::copy(vstrings.begin(), vstrings.end(), std::ostream_iterator<std::string>(std::cout, "\n")); 
     
 
