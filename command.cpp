@@ -4,6 +4,7 @@
 #include <string.h>
 #include <vector>
 #include <sstream>
+#include <iterator>
 using namespace std;
 
 class Command{
@@ -20,8 +21,7 @@ class Command{
             this->v = c.v;
         }
         vector<string> parseCommand(){
-            this->s;
-            stringstream ss(s);
+            stringstream ss(this->s);
             istream_iterator<string> begin(ss);
             istream_iterator<string> end;
             vector<string> vstrings(begin, end);

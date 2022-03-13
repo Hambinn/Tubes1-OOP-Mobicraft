@@ -4,6 +4,7 @@
 #include <string.h>
 #include <vector>
 #include <sstream>
+#include <iterator>
 using namespace std;
 
 vector<string> parseInput(string s){
