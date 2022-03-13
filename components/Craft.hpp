@@ -17,6 +17,9 @@ public :
     Item getItem(int idx);
     void setItem(int idx, int t_id, string t_name, int t_Qty);
 
+    void isCraftInvSlotEmty(int N, int* slot_idx);
+
+
 };
 
 #endif

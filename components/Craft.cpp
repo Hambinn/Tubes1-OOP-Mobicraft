@@ -32,4 +32,17 @@ void Craft::setItem(int idx, int t_id, string t_name, int t_Qty){
     this->craftItem[idx].ID = t_id;
     this->craftItem[idx].Name = t_name;
     this->craftItem[idx].Quantity = t_Qty;
+
+
+
 }
+
+
+void Craft::isCraftInvSlotEmty(int N, int* slot_idx){
+    int i = 0;
+    for (i; i < N; i++){
+        if(this->craftItem[slot_idx[i]].Name != "-"){
+            throw "gagal mindahin, ada slot craft table yang sudah terisi";
+        }
+    }
+};
