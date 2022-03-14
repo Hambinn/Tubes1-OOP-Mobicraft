@@ -5,16 +5,16 @@
 #include "Item.hpp"
 #include "Inventory.hpp"
 
-class Craft : public Inventory {
+class Craft{
 private :
-    Item craftItem[MAX_Craft];
+    ItemNonTool craftItem[MAX_Craft];
 public :
     Craft();
-    Craft(Item initialItem);
+    Craft(ItemNonTool initialItem);
     Craft(const Craft& other);
     ~Craft();
 
-    Item getItem(int idx);
+    ItemNonTool getItem(int idx);
     void setItem(int idx, int t_id, string t_name, int t_Qty);
 
     void isCraftInvSlotEmty(int N, int* slot_idx);

@@ -2,13 +2,13 @@
 #include "Craft.hpp"
 using namespace std;
 
-Craft::Craft() : Inventory(){
+Craft::Craft(){
     for (int i=0; i<MAX_Craft; i++){
-        this->craftItem[i] = Item();
+        this->craftItem[i] = ItemNonTool();
     }
 }
 
-Craft::Craft(Item initialItem){
+Craft::Craft(ItemNonTool initialItem){
     for (int i=0; i<MAX_Craft; i++){
         this->craftItem[i] = initialItem;
     }
@@ -24,17 +24,14 @@ Craft::~Craft(){
 
 }
 
-Item Craft::getItem(int idx){
+ItemNonTool Craft::getItem(int idx){
     return this->craftItem[idx];
 }
 
 void Craft::setItem(int idx, int t_id, string t_name, int t_Qty){
     this->craftItem[idx].ID = t_id;
     this->craftItem[idx].Name = t_name;
-    this->craftItem[idx].Quantity = t_Qty;
-
-
-
+    this->craftItem[idx].setQuantity(t_Qty);
 }
 
 

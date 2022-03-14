@@ -2,22 +2,26 @@
 #define __INVENTORY_HPP__
 
 #include <iostream>
+#include <vector>
 #include "Item.hpp"
+using namespace std;
 
 #define MAX_Inventory 27
 #define MAX_Craft 9
 
-class Inventory{
-private:
-    Item myItem[MAX_Inventory];
+
+
+class Inventory {
+private :
+    ItemNonTool myItem[MAX_Inventory]; //Ini masih non tool doang, bingung gmn bisa msukin tool ama nontool dua"nya
 public:
     Inventory();
-    Inventory(Item initialItem);
+    Inventory(ItemNonTool initialItem);
     Inventory(const Inventory& other);
     ~Inventory();
 
-    virtual Item getItem(int idx);
-    virtual void setItem(int idx, int t_id, string t_name, int t_Qty);
+    ItemNonTool getItem(int idx);
+    void setItem(int idx, int t_id, string t_name, int t_Qty);
     // void giveItem(int idx, Item I);
     // void discardItem(int idx, int Qty);
 };

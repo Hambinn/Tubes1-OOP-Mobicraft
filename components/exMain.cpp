@@ -192,11 +192,11 @@ int main(){
     //Show
     showCommand(*mobitaInv, *mobitaCraft);
 
-    //gagal mindahin gara2 ada craft table yang udah keisi
+    // //gagal mindahin gara2 ada craft table yang udah keisi
     int slot_craft3[2] = {8,7};
     moveCommand(mobitaInv, mobitaCraft, 2, 2, slot_craft3);
 
-    //Cara pakai createRecipe
+    // //Cara pakai createRecipe
     ListRecipe lr = createRecipe();
     return 0;
 } 
