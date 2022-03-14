@@ -6,9 +6,9 @@
 #include "Inventory.hpp"
 #include "Craft.hpp"
 #include "Recipe.hpp"
+#include "ListRecipe.hpp"
 #include <fstream>
 #include<dirent.h>
-
 
 using namespace std;
 
@@ -79,10 +79,10 @@ void showCommand(Inventory myInv, Craft myCraft){
     cout << "-------------------------- buat debug --------------------------" << endl;
 }
 
-void createRecipe() {
+ListRecipe createRecipe() {
     vector<string> recipe_name;
     vector<string>::iterator it;
-    vector<Recipe> recipe;
+    int cnt_recipe = 0;
     struct dirent *d;
     DIR *dr;
     dr = opendir("../config/recipe");
@@ -91,6 +91,7 @@ void createRecipe() {
         for(d=readdir(dr); d!=NULL; d=readdir(dr))
         {
             recipe_name.push_back(d->d_name);
+            cnt_recipe++;
         }
         closedir(dr);
     }
@@ -101,9 +102,10 @@ void createRecipe() {
     recipe_name.erase(it);
     it = recipe_name.begin();
     recipe_name.erase(it);
-    string path;
+    cnt_recipe -= 2;
+    ListRecipe list_recipe(cnt_recipe);
     for (auto i = recipe_name.begin(); i != recipe_name.end(); i++){
-        path = "../config/recipe/";
+        string path = "../config/recipe/";
         path += *i;
         fstream newfile(path); //open a file to perform read operation using file object
         string tp;
@@ -113,7 +115,6 @@ void createRecipe() {
         int col = int(tp[2]) - 48;  //use this because the max size of column is 3
         //create recipe
         Recipe re1(row,col);
-        int cnt_row = 0;
         //read recipe
         for (int i = 0; i < row; i++) {
             getline(newfile,tp);
@@ -157,11 +158,9 @@ void createRecipe() {
         newfile.close(); //close the file object
         re1.set_result(result);
         re1.set_num_of_result(num_of_result);
-        recipe.push_back(re1);
+        list_recipe.add_recipe(re1);
     }
-    for (auto i = recipe.begin(); i != recipe.end(); i++){
-        i->display_recipe();
-    }
+    return list_recipe;
 }
 
 int main(){
@@ -197,5 +196,7 @@ int main(){
     int slot_craft3[2] = {8,7};
     moveCommand(mobitaInv, mobitaCraft, 2, 2, slot_craft3);
 
+    //Cara pakai createRecipe
+    ListRecipe lr = createRecipe();
     return 0;
 } 
