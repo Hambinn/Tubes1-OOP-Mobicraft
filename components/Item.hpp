@@ -68,11 +68,17 @@ public :
     void substractDurability(int Dty);
 };
 
-// class ItemTotal : public ItemNonTool, public ItemTool {
+class ItemTotal {
+public :
+    bool filled_NonTool;
+    bool filled_Tool;
+    ItemNonTool myNonTool;
+    ItemTool myTool;
 
-// public :
-//     ItemTotal();
-// };
+    ItemTotal();
+    ItemTotal(ItemNonTool myNonTool);
+    ItemTotal(ItemTool myTool);
+};
 
 
 

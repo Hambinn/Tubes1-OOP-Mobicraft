@@ -12,30 +12,34 @@
 
 using namespace std;
 
+//Asumsi GiveCommand bakal selalu Item Non Tool
 void giveCommand(Inventory *myInv, string Name, int Qty){
     bool found = false;
     int idx = 0;
     if (Qty > 0 && Qty <= 64){
+
         //Cek apakah item dengan nama "Name" sudah ada di inventory
         for (int i=0; i<MAX_Inventory; i++){
-            if(myInv->getItem(i).getName() == Name && myInv->getItem(i).getQuantity() <64 ){
+            if(myInv->getItemName(i) == Name && myInv->getItemNonTool(i).getQuantity() <64 ){
                 found = true;
                 idx = i;
                 break;
             }
         }
+
         //Jika ada, tambah Qty pada item tersebut
         if(found){
-            int newQty = myInv->getItem(idx).getQuantity() + Qty;
-            myInv->setItem(idx,1,Name, newQty);
+            int newQty = myInv->getItem(idx).myNonTool.getQuantity() + Qty;
+            myInv->setItemNonTool(idx,1,Name, newQty);
+
         //Jika tidak, buat item baru pada inventory dengan indeks terkecil
         } else {
             int i = 0;
-            while (myInv->getItem(i).getID() != 0)
+            while (myInv->getItem(i).myNonTool.getID() != 0)
             {
                 i++;
             }
-            myInv->setItem(i,1,Name,Qty);
+            myInv->setItemNonTool(i,1,Name,Qty);
         }
     }
 }
@@ -43,13 +47,13 @@ void giveCommand(Inventory *myInv, string Name, int Qty){
 void moveCommand(Inventory *myInv,  Craft *myCraft, int slot_inv, int N, int* slot_craft){
     try{
         myCraft->isCraftInvSlotEmty(N, slot_craft);
-        if (myInv->getItem(slot_inv).getQuantity() >= N){
-            int newQty = myInv->getItem(slot_inv).getQuantity() - N;
-            string Name = myInv->getItem(slot_inv).getName();   
-            myInv->setItem(slot_inv,1,Name, newQty);
+        if (myInv->getItem(slot_inv).myNonTool.getQuantity() >= N){
+            int newQty = myInv->getItem(slot_inv).myNonTool.getQuantity() - N;
+            string Name = myInv->getItem(slot_inv).myNonTool.getName();   
+            myInv->setItemNonTool(slot_inv,1,Name, newQty);
 
             for (int i=0; i<N; i++){
-                myCraft->setItem(slot_craft[i],1,Name,1);
+                myCraft->setItemNonTool(slot_craft[i],1,Name,1);
             }
 
         }
@@ -62,7 +66,7 @@ void showCommand(Inventory myInv, Craft myCraft){
     //Show Craft
     cout << "\nCraft :\n" << endl;
     for (int i=0; i< MAX_Craft; i++){
-        cout << "[C " << myCraft.getItem(i).getName() << " " << myCraft.getItem(i).getQuantity() << "] ";
+        cout << "[C " << myCraft.getItemNonTool(i).getName() << " " << myCraft.getItemNonTool(i).getQuantity() << "] ";
         if ((i+1) % 3 == 0){
             cout << endl;
         }
@@ -71,9 +75,29 @@ void showCommand(Inventory myInv, Craft myCraft){
     //Show Inventory
     cout << "\nInventory :\n" << endl;
     for (int i=0; i< MAX_Inventory; i++){
-        cout << "[I " << myInv.getItem(i).getName() << " " << myInv.getItem(i).getQuantity() << "] ";
-        if ((i+1) % 9 == 0){
-            cout << endl;
+
+        // Print jika isinya item NonTool
+        if (myInv.isFilledNonTool(i) && !myInv.isFilledTool(i)){
+            cout << "[I " << myInv.getItemNonTool(i).getName() << " " << myInv.getItemNonTool(i).getQuantity() << "] ";
+            if ((i+1) % 9 == 0){
+                cout << endl;
+            }
+        } 
+        
+        //Print jika isinya item Tool
+        else if (!myInv.isFilledNonTool(i) && myInv.isFilledTool(i)){
+            cout << "[I " << myInv.getItemNonTool(i).getName() << " " << myInv.getItemTool(i).getDurability() << "] ";
+            if ((i+1) % 9 == 0){
+                cout << endl;
+            }
+        }
+
+        //Print jika tidak ada item
+        else if (!myInv.isFilledNonTool(i) && !myInv.isFilledTool(i)){
+            cout << "[I " << "-" << " " << 0 << "] ";
+            if ((i+1) % 9 == 0){
+                cout << endl;
+            }
         }
     }
     cout << "-------------------------- buat debug --------------------------" << endl;
