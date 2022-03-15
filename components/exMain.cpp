@@ -8,6 +8,7 @@
 #include "Recipe.hpp"
 #include "ListRecipe.hpp"
 #include <fstream>
+#include <map>
 #include<dirent.h>
 
 using namespace std;
@@ -80,6 +81,33 @@ void showCommand(Inventory myInv, Craft myCraft){
 }
 
 ListRecipe createRecipe() {
+    //make a map for item and its type
+    map <string, string> item_to_type;
+    string path = "../config/item.txt";
+    fstream newfile(path);
+    string tp;
+    while (getline(newfile,tp)) {
+        string s = tp;
+        string delimiter = " ";
+        size_t pos = 0;
+        string token;
+        string key = "";
+        string value = "";
+        int cnt = 0;
+        while ((pos = s.find(delimiter)) != string::npos) {
+            cnt++;
+            token = s.substr(0, pos);
+            if (cnt == 2){
+                key = token;
+            }
+            if (cnt == 3) {
+                value = token;
+            }
+            s.erase(0, pos + delimiter.length());
+        }
+        item_to_type[key] = value;
+    }
+    //Read all recipe
     vector<string> recipe_name;
     vector<string>::iterator it;
     int cnt_recipe = 0;
@@ -124,11 +152,21 @@ ListRecipe createRecipe() {
                 if ((tp[j] == ' ') || (j == tp.length()-1)) {
                     if (j == tp.length()-1) {
                         temp += tp[j];
-                        re1.set_recipe(temp,i,cnt_col);
+                        if ((item_to_type[temp] == "") || (item_to_type[temp] == "-")){
+                            re1.set_recipe(temp,i,cnt_col);
+                        }
+                        else{
+                            re1.set_recipe(item_to_type[temp],i,cnt_col);
+                        }
                         cnt_col++;
                     }
                     else{
-                        re1.set_recipe(temp,i,cnt_col);
+                        if ((item_to_type[temp] == "") || (item_to_type[temp] == "-")){
+                            re1.set_recipe(temp,i,cnt_col);
+                        }
+                        else{
+                            re1.set_recipe(item_to_type[temp],i,cnt_col);
+                        }
                         temp = "";
                         cnt_col++;
                     }
@@ -198,5 +236,6 @@ int main(){
 
     // //Cara pakai createRecipe
     ListRecipe lr = createRecipe();
+    lr.get_recipe(10).display_recipe();
     return 0;
 } 

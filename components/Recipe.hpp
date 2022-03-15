@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <map>
 using namespace std;
 
 class Recipe{
@@ -28,6 +29,7 @@ public:
     int get_col() const;    
     void display_recipe() const;
     Recipe& operator=(const Recipe& r);
+    map<string,int> get_all_type() const;
 };
 
 #endif

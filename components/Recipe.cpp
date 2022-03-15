@@ -164,3 +164,13 @@ Recipe& Recipe::operator=(const Recipe& r) {
     return *this;
 }
 
+map<string,int> Recipe::get_all_type() const {
+    map<string,int> type;
+    for (int i = 0 ; i < this->row; i++) {
+        for (int j = 0; j < this->col; j++){
+            type[this->items[i][j]] += 1;
+        }
+    }
+    return type;
+}
+
