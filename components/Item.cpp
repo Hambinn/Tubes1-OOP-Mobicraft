@@ -93,3 +93,23 @@ void ItemTool::addDurability(int Dty){
 void ItemTool::substractDurability(int Dty){
     this->Durability -= Dty;
 }
+
+
+ItemTotal::ItemTotal(){
+    this->filled_NonTool = false;
+    this->filled_Tool = false;
+    this->myNonTool = ItemNonTool();
+    this->myTool = ItemTool();
+}
+
+ItemTotal::ItemTotal(ItemNonTool myNonTool){
+    this->filled_NonTool = true;
+    this->filled_Tool = false;
+    this->myNonTool = myNonTool;
+}
+
+ItemTotal::ItemTotal(ItemTool myTool){
+    this->filled_NonTool = false;
+    this->filled_Tool = true;
+    this->myTool = myTool;
+}

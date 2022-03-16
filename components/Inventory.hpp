@@ -7,21 +7,27 @@
 using namespace std;
 
 #define MAX_Inventory 27
-#define MAX_Craft 9
-
-
 
 class Inventory {
 private :
-    ItemNonTool myItem[MAX_Inventory]; //Ini masih non tool doang, bingung gmn bisa msukin tool ama nontool dua"nya
+    ItemTotal myItem[MAX_Inventory]; 
 public:
     Inventory();
-    Inventory(ItemNonTool initialItem);
+    Inventory(ItemTotal initialItem);
     Inventory(const Inventory& other);
     ~Inventory();
 
-    ItemNonTool getItem(int idx);
-    void setItem(int idx, int t_id, string t_name, int t_Qty);
+    ItemTotal getItem(int idx);  
+    bool isFilledTool(int idx);
+    bool isFilledNonTool(int idx);
+    string getItemName(int idx);
+
+    ItemNonTool getItemNonTool(int idx);
+    void setItemNonTool(int idx, int t_id, string t_name, int t_Qty);
+
+    ItemTool getItemTool(int idx);
+    void setItemTool(int idx, int t_id, string t_name, int t_Dty);
+
     // void giveItem(int idx, Item I);
     // void discardItem(int idx, int Qty);
 };

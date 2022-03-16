@@ -3,19 +3,28 @@
 
 #include <iostream>
 #include "Item.hpp"
-#include "Inventory.hpp"
+
+#define MAX_Craft 9
 
 class Craft{
 private :
-    ItemNonTool craftItem[MAX_Craft];
+    ItemTotal craftItem[MAX_Craft];
 public :
     Craft();
-    Craft(ItemNonTool initialItem);
+    Craft(ItemTotal initialItem);
     Craft(const Craft& other);
     ~Craft();
 
-    ItemNonTool getItem(int idx);
-    void setItem(int idx, int t_id, string t_name, int t_Qty);
+    ItemTotal getItem(int idx);  
+    bool isFilledTool(int idx);
+    bool isFilledNonTool(int idx);
+    string getItemName(int idx);
+
+    ItemNonTool getItemNonTool(int idx);
+    void setItemNonTool(int idx, int t_id, string t_name, int t_Qty);
+
+    ItemTool getItemTool(int idx);
+    void setItemTool(int idx, int t_id, string t_name, int t_Dty);
 
     void isCraftInvSlotEmty(int N, int* slot_idx);
 

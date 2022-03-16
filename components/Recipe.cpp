@@ -111,6 +111,7 @@ int Recipe::get_col() const {
 }
     
 void Recipe::display_recipe() const {
+    cout << "-----Original-----" << endl;
     for (int i = 0; i < this->row; i++) {
         for (int j = 0; j < this->col; j++) {
             if (j != this->col-1) {
@@ -121,7 +122,17 @@ void Recipe::display_recipe() const {
             }
         }
     }
-    cout << "Result: " << this->result << endl;
+    cout << "-----Mirrored-----" << endl;
+    for (int i = 0; i < this->row; i++) {
+        for (int j = 0; j < this->col; j++) {
+            if (j != this->col-1) {
+                cout << this->itemsMirror[i][j] << " ";
+            }
+            else{
+                cout << this->itemsMirror[i][j] << endl;
+            }
+        }
+    }
 }
 
 Recipe& Recipe::operator=(const Recipe& r) {
