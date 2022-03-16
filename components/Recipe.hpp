@@ -26,7 +26,9 @@ public:
     string get_result() const;
     int get_num_of_result() const;
     int get_row() const;
-    int get_col() const;    
+    int get_col() const;
+    string get_item(int row, int col) const;
+    string get_item_mirror(int row, int col) const;
     void display_recipe() const;
     Recipe& operator=(const Recipe& r);
     map<string,int> get_all_type() const;

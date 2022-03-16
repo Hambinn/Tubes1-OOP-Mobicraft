@@ -134,6 +134,13 @@ void Recipe::display_recipe() const {
         }
     }
 }
+string Recipe::get_item(int row, int col) const{
+    return this->items[row][col];
+}
+
+string Recipe::get_item_mirror(int row, int col) const{
+    return this->itemsMirror[row][col];
+}
 
 Recipe& Recipe::operator=(const Recipe& r) {
     this->result = r.result;
