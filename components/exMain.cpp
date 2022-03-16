@@ -222,5 +222,10 @@ int main(){
 
     // //Cara pakai createRecipe
     ListRecipe lr = createRecipe();
+
+    for(int i=0; i < lr.get_neff(); i++){
+        cout << endl;
+        lr.get_recipe(i).display_recipe();
+    }
     return 0;
 } 
