@@ -47,7 +47,7 @@ void giveCommand(Inventory *myInv, string Name, int Qty){
 
 void moveCommand(Inventory *myInv,  Craft *myCraft, int slot_inv, int N, int* slot_craft){
     try{
-        myCraft->isCraftInvSlotEmty(N, slot_craft);
+        myCraft->isCraftInvSlotEmpty(N, slot_craft);
         if (myInv->getItem(slot_inv).myNonTool.getQuantity() >= N){
             int newQty = myInv->getItem(slot_inv).myNonTool.getQuantity() - N;
             string Name = myInv->getItem(slot_inv).myNonTool.getName();   
@@ -248,6 +248,7 @@ int main(){
     moveCommand(mobitaInv, mobitaCraft, 0, 2, slot_craft);
     showCommand(*mobitaInv, *mobitaCraft);
 
+
     int slot_craft2[3] = {0,1,2};
     moveCommand(mobitaInv, mobitaCraft, 2, 3, slot_craft2);
 
@@ -258,12 +259,39 @@ int main(){
     int slot_craft3[2] = {8,7};
     moveCommand(mobitaInv, mobitaCraft, 2, 2, slot_craft3);
 
+    map<string,int> tool;
+    map<string,int> type;
+    map<string,int>::iterator it;
+
+    tool = mobitaCraft->getSumOfToolandNonTool();
+    type = mobitaCraft->getSumOfType();
+
+    for (it = tool.begin(); it != tool.end(); it++) {
+        cout << it->first << " ";
+        cout << it->second << endl;
+    }
+    for (it = type.begin(); it != type.end(); it++) {
+        cout << it->first << " ";
+        cout << it->second << endl;
+    }
+
     // //Cara pakai createRecipe
     ListRecipe lr = createRecipe();
 
+    /*
+    cara pake get all type recipe
     for(int i=0; i < lr.get_neff(); i++){
         cout << endl;
         lr.get_recipe(i).display_recipe();
+        cout << "-----type-----" << endl;
+        type = lr.get_recipe(i).get_all_type();
+        for (it = type.begin(); it != type.end(); it++) {
+            cout << it->first << " ";
+            cout << it->second << endl;
+        }
     }
+    */
+
+
     return 0;
 } 

@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include "Item.hpp"
+#include "Inventory.hpp"
+#include <map>
 
 #define MAX_Craft 9
 
@@ -20,13 +22,23 @@ public :
     bool isFilledNonTool(int idx);
     string getItemName(int idx);
 
+    string getType(int idx);
+
     ItemNonTool getItemNonTool(int idx);
     void setItemNonTool(int idx, int t_id, string t_name, int t_Qty);
 
     ItemTool getItemTool(int idx);
     void setItemTool(int idx, int t_id, string t_name, int t_Dty);
 
-    void isCraftInvSlotEmty(int N, int* slot_idx);
+    void isCraftInvSlotEmpty(int N, int* slot_idx);
+
+    bool isCraftInvSlotEmpty(int idx);
+
+    map<string,int> getSumOfToolandNonTool();
+
+    map<string,int> getSumOfType();
+
+    void Crafting(Inventory *myInv,  Craft *myCraft);
 
 
 };

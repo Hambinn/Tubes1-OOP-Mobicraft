@@ -52,6 +52,11 @@ string Craft::getItemName(int idx){
     }
 }
 
+string Craft::getType(int idx){
+    //Jika di inventory ada Item NonTool
+    return this->getItem(idx).myNonTool.getType();
+}
+
 ItemNonTool Craft::getItemNonTool(int idx){
     return this->getItem(idx).myNonTool;
 }
@@ -78,7 +83,7 @@ void Craft::setItemTool(int idx, int t_id, string t_name, int t_Dty){
 }
 
 
-void Craft::isCraftInvSlotEmty(int N, int* slot_idx){
+void Craft::isCraftInvSlotEmpty(int N, int* slot_idx){
     int i = 0;
     for (i; i < N; i++){
         if(this->getItemName(i) != "-"){
@@ -86,3 +91,41 @@ void Craft::isCraftInvSlotEmty(int N, int* slot_idx){
         }
     }
 };
+
+bool Craft::isCraftInvSlotEmpty(int idx){
+    return (this->getItemName(idx) == "-");
+};
+
+map<string,int> Craft::getSumOfToolandNonTool(){
+    map<string,int> type;
+    type["Tool"] = 0;
+    type["NonTool"] = 0;
+
+    for (int i = 0 ; i < MAX_Craft; i++) {
+        if(this->isCraftInvSlotEmpty(i) == false){
+            if(this->getItem(i).filled_NonTool == true){
+                type["NonTool"] ++;
+            }else{
+                type["Tool"] ++;
+            }
+        }
+    }
+    return type;
+};
+
+map<string,int> Craft::getSumOfType(){
+    map<string,int> type;
+
+    for (int i = 0 ; i < MAX_Craft; i++) {
+        if(this->isCraftInvSlotEmpty(i) == false){
+            type[this->getType(i)] ++;
+        }
+    }
+    return type;
+};
+
+void Craft::Crafting(Inventory *myInv,  Craft *myCraft){
+    cout << "CRAFTINGGGG!!!!! :D" << endl;
+
+};
+
