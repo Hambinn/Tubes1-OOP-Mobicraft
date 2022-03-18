@@ -24,12 +24,17 @@ public:
 
     ItemNonTool getItemNonTool(int idx);
     void setItemNonTool(int idx, int t_id, string t_name, int t_Qty);
+    void deleteItemNonTool(int idx);
 
     ItemTool getItemTool(int idx);
     void setItemTool(int idx, int t_id, string t_name, int t_Dty);
+    void deleteItemTool(int idx);
 
-    // void giveItem(int idx, Item I);
-    // void discardItem(int idx, int Qty);
+    //Command
+    void giveItem(ItemNonTool itemNT, int Qty);
+    void discardItem(int idx, int Qty);
+    void moveItem(int src, int dest);              //Move Item dari Inventory ke Inventory
+ 
 };
 
 #endif
