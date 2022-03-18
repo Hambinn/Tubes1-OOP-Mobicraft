@@ -9,7 +9,8 @@
 #include "components/Inventory.hpp"
 using namespace std;
 
-vector<Item> readItems(string fileName){
+
+void readItems(vector<ItemNonTool> *itemsNT, vector<ItemTool> *itemsT, string fileName){
 
     ifstream itemConfigaFile(fileName.c_str());
 
@@ -20,35 +21,52 @@ vector<Item> readItems(string fileName){
     }
 
     string line;
-    vector<Item> items;
     while (getline(itemConfigaFile, line)){
-        Item item;
+        ItemNonTool itemNT;
+        ItemTool itemT;
         stringstream iline(line);
         vector<string> elementsInVector;
         string elementsInLine;
         int i=0;
         while (getline(iline,elementsInLine,' ')){
-            //cout << elementsInLine << endl << "==";
             elementsInVector.push_back(elementsInLine);
-            cout << elementsInVector[i] << endl;
-            cout << "i now" << i << endl;
+            //cout << elementsInVector[i] << endl;
+            //cout << "i now" << i << endl;
             i++;
         }
-        item.ID=stoi(elementsInVector[0]);
-        item.Name=elementsInVector[1];
-        items.push_back(item);
+        if (elementsInVector[3] == "NONTOOL"){
+            itemNT.ID=stoi(elementsInVector[0]);
+            itemNT.Name=elementsInVector[1];
+            itemNT.Type=elementsInVector[2];
+            itemsNT->push_back(itemNT);
+        } else if (elementsInVector[3] == "TOOL"){
+            itemT.ID=stoi(elementsInVector[0]);
+            itemT.Name=elementsInVector[1];
+            itemsT->push_back(itemT);
+        }
     }
 
     itemConfigaFile.close();
-    return items;
 }
+
 
 int main() {
     string configPath = "./config";
     string itemConfigPath = configPath + "/item.txt";
-    vector<Item> items;
-  // read item from config file
-    items = readItems(itemConfigPath);
+    vector<ItemNonTool> listItemNonTool;
+    vector<ItemTool> listItemTool;
+    // read item from config file
+    readItems(&listItemNonTool, &listItemTool, itemConfigPath);
+
+    //Print List Non Tool (For Debug)
+    cout << "Item Non Tool Available : "<< endl;
+    for(int i=0; i < listItemNonTool.size(); i++)
+    cout << listItemNonTool[i].getID() << ", " << listItemNonTool[i].getName() << ", " << listItemNonTool[i].getType() << endl;
+
+    //Print List Non Tool (for Debug)
+    cout << "\nItem Tool Available : " << endl;
+    for(int i=0; i < listItemNonTool.size(); i++)
+    cout << listItemTool[i].getID() << ", " << listItemTool[i].getName() << endl;
 
 //   // read recipes
 //   for (const auto &entry :
