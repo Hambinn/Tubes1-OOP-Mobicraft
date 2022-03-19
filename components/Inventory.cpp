@@ -149,7 +149,7 @@ void Inventory::giveItem(ItemNonTool itemNT, int Qty){
             {
                 i++;
             }
-            if (i > 0 && i < 27){
+            if (i >= 0 && i < 27){
                 this->setItemNonTool(i,itemNT.getID(), itemNT.getName(), Qty);
             } else {
                 // throw
@@ -166,7 +166,7 @@ void Inventory::giveItem(ItemTool itemT, int Qty){
         {
             i++;
         }
-        if (i > 0 && i < 27){
+        if (i >= 0 && i < 27){
             this->setItemTool(i,itemT.getID(), itemT.getName(), 10);
         } else {
             // throw
