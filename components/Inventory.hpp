@@ -31,9 +31,13 @@ public:
     void deleteItemTool(int idx);
 
     //Command
+    void showItem();
     void giveItem(ItemNonTool itemNT, int Qty);
+    void giveItem(ItemTool itemT, int Qty);
     void discardItem(int idx, int Qty);
-    void moveItem(int src, int dest);              //Move Item dari Inventory ke Inventory
+    void moveItem(int src, int dest);                     //Move Item dari Inventory ke Inventory
+    void useItem(int idx);
+
  
 };
 

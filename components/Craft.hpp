@@ -38,6 +38,8 @@ public :
 
     map<string,int> getSumOfType();
 
+    void moveItem(Inventory *myInv, int idx_inv, int N, int* idx_craft);
+
     void Crafting(Inventory *myInv,  Craft *myCraft);
 
 

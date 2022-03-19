@@ -124,6 +124,40 @@ map<string,int> Craft::getSumOfType(){
     return type;
 };
 
+//Move dari Inventory ke Craft
+void Craft::moveItem(Inventory *myInv, int idx_inv, int N, int* idx_craft){
+    //Move Item NonTool
+    if (myInv->isFilledNonTool(idx_inv)){
+        try{
+            this->isCraftInvSlotEmpty(N, idx_craft);
+            if (myInv->getItemNonTool(idx_inv).getQuantity() >= N){
+                int newQty = myInv->getItem(idx_inv).myNonTool.getQuantity() - N;
+                myInv->getItem(idx_inv).myNonTool.setQuantity(newQty);
+                for (int i=0; i<N; i++){
+                    this->setItemNonTool(idx_craft[i], myInv->getItemNonTool(idx_inv).getID() ,myInv->getItemNonTool(idx_inv).getName(),1);
+                } 
+                if (myInv->getItemNonTool(idx_inv).getQuantity() == 0){
+                    myInv->deleteItemNonTool(idx_inv);
+                }
+            }
+        }catch(const char* err){
+            cout << err << endl;
+        }
+    }
+    //Move Item Tool
+    if (myInv->isFilledTool(idx_inv)){
+        try{
+            this->isCraftInvSlotEmpty(N, idx_craft);
+            if (N == 1){
+                this->setItemNonTool(idx_craft[0], myInv->getItemTool(idx_inv).getID() ,myInv->getItemTool(idx_inv).getName(),myInv->getItemTool(idx_inv).getDurability());
+                myInv->deleteItemTool(idx_inv);
+            }
+        }catch(const char* err){
+            cout << err << endl;
+        }
+    }
+}
+
 void Craft::Crafting(Inventory *myInv,  Craft *myCraft){
     cout << "CRAFTINGGGG!!!!! :D" << endl;
 
