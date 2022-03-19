@@ -27,9 +27,13 @@ public :
 
     ItemNonTool getItemNonTool(int idx);
     void setItemNonTool(int idx, int t_id, string t_name, int t_Qty);
+    void deleteItemNonTool(int idx);
 
     ItemTool getItemTool(int idx);
     void setItemTool(int idx, int t_id, string t_name, int t_Dty);
+    void deleteItemTool(int idx);
+
+    void deleteAllTool();
 
     void isCraftInvSlotEmpty(int N, int* slot_idx);
 

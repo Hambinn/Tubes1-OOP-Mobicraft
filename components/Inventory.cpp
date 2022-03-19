@@ -107,7 +107,7 @@ void Inventory::showItem(){
         
         //Print jika isinya item Tool
         else if (!this->isFilledNonTool(i) && this->isFilledTool(i)){
-            cout << "[I " << this->getItemNonTool(i).getName() << " " << this->getItemTool(i).getDurability() << "] ";
+            cout << "[I " << this->getItemTool(i).getName() << " " << this->getItemTool(i).getDurability() << "] ";
             if ((i+1) % 9 == 0){
                 cout << endl;
             }
@@ -167,7 +167,7 @@ void Inventory::giveItem(ItemTool itemT, int Qty){
             i++;
         }
         if (i >= 0 && i < 27){
-            this->setItemTool(i,itemT.getID(), itemT.getName(), 10);
+            this->setItemTool(i, itemT.getID(), itemT.getName(), 1);
         } else {
             // throw
             cout << "Slot Inventory Penuh";

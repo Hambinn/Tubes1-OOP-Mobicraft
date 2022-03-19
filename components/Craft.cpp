@@ -69,6 +69,13 @@ void Craft::setItemNonTool(int idx, int t_id, string t_name, int t_Qty){
     this->craftItem[idx].filled_Tool = false;
 }
 
+void Craft::deleteItemNonTool(int idx){
+    this->craftItem[idx].myNonTool.ID = 0;
+    this->craftItem[idx].myNonTool.Name = "-";
+    this->craftItem[idx].myNonTool.Quantity = 0;
+    this->craftItem[idx].filled_NonTool = false;
+    this->craftItem[idx].filled_Tool = false;
+}
 
 ItemTool Craft::getItemTool(int idx){
     return this->getItem(idx).myTool;
@@ -82,6 +89,19 @@ void Craft::setItemTool(int idx, int t_id, string t_name, int t_Dty){
     this->craftItem[idx].filled_Tool = false;
 }
 
+void Craft::deleteItemTool(int idx){
+    this->craftItem[idx].myTool.ID = 0;
+    this->craftItem[idx].myTool.Name = "-";
+    this->craftItem[idx].myTool.Durability = 0;
+    this->craftItem[idx].filled_NonTool = false;
+    this->craftItem[idx].filled_Tool = false;
+}
+
+void Craft::deleteAllTool(){
+    for(int i = 0; i < MAX_Craft; i++){
+        this->deleteItemTool(i);
+    }
+};
 
 void Craft::isCraftInvSlotEmpty(int N, int* slot_idx){
     int i = 0;
@@ -193,6 +213,7 @@ void Craft::Crafting(Inventory *myInv, ListRecipe *resep){
 
         map<string,int> nameAndDurability;
         nameAndDurability = this->getNameAndDurabilityTool();
+        this->deleteAllTool();
 
         if(nameAndDurability.size() != 1){
             cout << "item tool berbeda, gabisa di craft";
