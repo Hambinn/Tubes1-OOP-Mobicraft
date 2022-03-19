@@ -62,10 +62,11 @@ ItemNonTool Craft::getItemNonTool(int idx){
     return this->getItem(idx).myNonTool;
 }
 
-void Craft::setItemNonTool(int idx, int t_id, string t_name, int t_Qty){
+void Craft::setItemNonTool(int idx, int t_id, string t_name, int t_Qty, string t_typ){
     this->craftItem[idx].myNonTool.ID = t_id;
     this->craftItem[idx].myNonTool.Name = t_name;
     this->craftItem[idx].myNonTool.Quantity = t_Qty;
+    this->craftItem[idx].myNonTool.Type = t_typ;
     this->craftItem[idx].filled_NonTool = true;
     this->craftItem[idx].filled_Tool = false;
 }
@@ -144,6 +145,8 @@ map<string,int> Craft::getSumOfType(){
     map<string,int> type;       // key: Type, kalo gaada type, simpen nama itemnya, value: jumlahnya
 
     for (int i = 0 ; i < MAX_Craft; i++) {
+        // cout << "masuk sini" << endl;
+        // cout << this->getItem(i).myNonTool.getType() << endl;
         if(this->isCraftInvSlotEmpty(i) == false){
             if(this->getItem(i).myNonTool.getType() != "-"){
                 type[this->getItem(i).myNonTool.getType()] ++;
@@ -176,7 +179,7 @@ void Craft::moveItem(Inventory *myInv, int idx_inv, int N, int* idx_craft){
                 int newQty = myInv->getItem(idx_inv).myNonTool.getQuantity() - N;
                 myInv->getItem(idx_inv).myNonTool.setQuantity(newQty);
                 for (int i=0; i<N; i++){
-                    this->setItemNonTool(idx_craft[i], myInv->getItemNonTool(idx_inv).getID() ,myInv->getItemNonTool(idx_inv).getName(),1);
+                    this->setItemNonTool(idx_craft[i], myInv->getItemNonTool(idx_inv).getID() ,myInv->getItemNonTool(idx_inv).getName(),1, myInv->getItemNonTool(idx_inv).getType());
                 } 
                 if (myInv->getItemNonTool(idx_inv).getQuantity() == 0){
                     myInv->deleteItemNonTool(idx_inv);
@@ -207,14 +210,12 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
     pair<string,int> result;
 
     allToolNonTool = this->getSumOfToolandNonTool();
-    
     /*
     for (it = allToolNonTool.begin(); it != allToolNonTool.end(); it++) {
         cout << it->first << " ";
         cout << it->second << endl;
     }
     */
-      
     if(allToolNonTool["Tool"] != 0 && allToolNonTool["NonTool"] == 0){
         cout << "isinya tool semuaa" << endl;
 
@@ -234,7 +235,6 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
                     result.second = it->second;
                 }
             }
-            
         }
 
     }else if(allToolNonTool["NonTool"] != 0 && allToolNonTool["Tool"] == 0){
@@ -242,13 +242,60 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
 
         map<string,int> allType;
         allType = this->getSumOfType();
+        string allTypeArray[allType.size()][2];
+        int i = 0;
+
+        for (it = allType.begin(); it != allType.end(); it++) {
+            allTypeArray[i][0] = it->first;
+            allTypeArray[i][1] = to_string(it->second);
+            i++;
+        }
 
         /*
-        for (it = allType.begin(); it != allType.end(); it++) {
-            cout << it->first << " ";
-            cout << it->second << endl;
-        }
         cout << allType.size() << endl;
+        */
+       
+        map<string,int> type;
+        map<string,int>::iterator it1;
+        int indexOfResep = 0;
+        bool found = false;
+        int j, k;
+        i = 0;
+
+        while(i < resep->get_neff() && found == false){
+            type = resep->get_recipe(i).get_all_type();
+            if(type.size() == allType.size()){
+                j = 0;
+                found = true;
+                while(j < allType.size()){
+                    k = stoi(allTypeArray[j][1]);
+                    if(type[allTypeArray[j][0]] != k){
+                        found = false;
+                        break;
+                    }
+                    j++;
+                }
+                if(found == true){
+                    cout << "ketemuuu di " << i << endl;
+                    resep->get_recipe(i).display_recipe();
+                    break;
+                }
+            }
+            i++;
+        }
+        
+        /*
+        for(int i=0; i < resep->get_neff(); i++){
+            cout << endl;
+            cout << "col" << resep->get_recipe(i).get_col() << endl;
+            cout << "row" << resep->get_recipe(i).get_row() << endl;
+            type =  resep->get_recipe(i).get_all_type();
+            for (it = type.begin(); it != type.end(); it++) {
+                cout << it->first << " ";
+                cout << it->second << endl;
+            }
+            resep->get_recipe(i).display_recipe();
+        }
         */
     }else{
         cout << "ada tool & nontoll, gatau harus apa" << endl;

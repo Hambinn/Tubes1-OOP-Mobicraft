@@ -216,7 +216,8 @@ int main() {
     */
     mobitaInv->giveItem(listItemTool[1],1);
     mobitaInv->giveItem(listItemTool[1],1);
-    mobitaInv->giveItem(listItemNonTool[3],2);
+    mobitaInv->giveItem(listItemNonTool[3],1);
+    mobitaInv->giveItem(listItemNonTool[4],1);
 
     // Coba lihat isi mobitaInv
     mobitaInv->showItem();
@@ -224,24 +225,21 @@ int main() {
     mobiCraft->showItem();
 
     int slot_craft[1] = {0};
-    mobiCraft->moveItem(mobitaInv, 0, 1, slot_craft);
+    mobiCraft->moveItem(mobitaInv, 2, 1, slot_craft);
 
-    int slot_craft1[1] = {1};
-    mobiCraft->moveItem(mobitaInv, 1, 1, slot_craft1);
+    int slot_craft1[1] = {3};
+    mobiCraft->moveItem(mobitaInv, 3, 1, slot_craft1);
 
     // Coba lihat isi mobitaInv
     mobitaInv->showItem();
     // Coba lihat isi mobitaCraft
     mobiCraft->showItem();
-
     
     // coba bikin resep
     ListRecipe lr = createRecipe();
 
-    map<string,int> type;
-    map<string,int>::iterator it;
+    //crafting
     pair<string,int> hasilCraft;
-
     hasilCraft = mobiCraft->Crafting(&lr);  //buat yang hasilnya tool, dia return nama item & durability. buat yg non tool. return nama item & quantity
 
     for (int i = 0; i < listItemNonTool.size(); i++){
@@ -257,13 +255,22 @@ int main() {
     mobiCraft->showItem();
 
     //print list resep buat debug
+    /*
+    map<string,int> type;
+    map<string,int>::iterator it;
     
     for(int i=0; i < lr.get_neff(); i++){
         cout << endl;
         cout << "col" << lr.get_recipe(i).get_col() << endl;
         cout << "row" << lr.get_recipe(i).get_row() << endl;
+        type =  lr.get_recipe(i).get_all_type();
+        for (it = type.begin(); it != type.end(); it++) {
+            cout << it->first << " ";
+            cout << it->second << endl;
+        }
         lr.get_recipe(i).display_recipe();
     }
+    */
     
 
 //   // read recipes

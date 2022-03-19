@@ -57,10 +57,11 @@ ItemNonTool Inventory::getItemNonTool(int idx){
     return this->getItem(idx).myNonTool;
 }
 
-void Inventory::setItemNonTool(int idx, int t_id, string t_name, int t_Qty){
+void Inventory::setItemNonTool(int idx, int t_id, string t_name, int t_Qty, string t_typ){
     this->myItem[idx].myNonTool.ID = t_id;
     this->myItem[idx].myNonTool.Name = t_name;
     this->myItem[idx].myNonTool.Quantity = t_Qty;
+    this->myItem[idx].myNonTool.Type = t_typ;
     this->myItem[idx].filled_NonTool = true;
     this->myItem[idx].filled_Tool = false;
 }
@@ -140,7 +141,7 @@ void Inventory::giveItem(ItemNonTool itemNT, int Qty){
         //Jika ada, tambah Qty pada item tersebut
         if(found){
             int newQty = this->getItem(idx).myNonTool.getQuantity() + Qty;
-            this->setItemNonTool(idx, itemNT.getID(), itemNT.getName(), newQty);
+            this->setItemNonTool(idx, itemNT.getID(), itemNT.getName(), newQty, itemNT.getType());
 
         //Jika tidak, buat item baru pada inventory dengan indeks terkecil
         } else {
@@ -150,7 +151,7 @@ void Inventory::giveItem(ItemNonTool itemNT, int Qty){
                 i++;
             }
             if (i >= 0 && i < 27){
-                this->setItemNonTool(i,itemNT.getID(), itemNT.getName(), Qty);
+                this->setItemNonTool(i,itemNT.getID(), itemNT.getName(), Qty, itemNT.getType());
             } else {
                 // throw
                 cout << "Slot Inventory Penuh";
