@@ -97,7 +97,7 @@ bool Craft::isCraftInvSlotEmpty(int idx){
 };
 
 map<string,int> Craft::getSumOfToolandNonTool(){
-    map<string,int> type;
+    map<string,int> type;       // key: Tool atau Nontool, value: jumlahnya
     type["Tool"] = 0;
     type["NonTool"] = 0;
 
@@ -114,14 +114,29 @@ map<string,int> Craft::getSumOfToolandNonTool(){
 };
 
 map<string,int> Craft::getSumOfType(){
-    map<string,int> type;
+    map<string,int> type;       // key: Type, kalo gaada type, simpen nama itemnya, value: jumlahnya
 
     for (int i = 0 ; i < MAX_Craft; i++) {
         if(this->isCraftInvSlotEmpty(i) == false){
-            type[this->getType(i)] ++;
+            if(this->getItem(i).myNonTool.getType() != "-"){
+                type[this->getItem(i).myNonTool.getType()] ++;
+            }else{
+                type[this->getItem(i).myNonTool.getName()] ++;
+            }
         }
     }
     return type;
+};
+
+map<string,int> Craft::getNameAndDurabilityTool(){
+    map<string,int> nameDurability;       // key: nama Item, value: durabilitynya, kalo sama dijumlah
+
+    for (int i = 0 ; i < MAX_Craft; i++) {
+        if(this->isCraftInvSlotEmpty(i) == false){
+            nameDurability[this->getItem(i).myTool.getName()] = nameDurability[this->getItem(i).myTool.getName()] + this->getItem(i).myTool.getDurability();
+        }
+    }
+    return nameDurability;
 };
 
 //Move dari Inventory ke Craft
@@ -158,8 +173,50 @@ void Craft::moveItem(Inventory *myInv, int idx_inv, int N, int* idx_craft){
     }
 }
 
-void Craft::Crafting(Inventory *myInv,  Craft *myCraft){
+void Craft::Crafting(Inventory *myInv, ListRecipe *resep){
     cout << "CRAFTINGGGG!!!!! :D" << endl;
+    map<string,int> allToolNonTool;
+    map<string,int>::iterator it;
+
+    allToolNonTool = this->getSumOfToolandNonTool();
+    
+
+    /*
+    for (it = allToolNonTool.begin(); it != allToolNonTool.end(); it++) {
+        cout << it->first << " ";
+        cout << it->second << endl;
+    }
+    */   
+
+    if(allToolNonTool["Tool"] != 0 && allToolNonTool["NonTool"] == 0){
+        cout << "isinya tool semuaa" << endl;
+
+        map<string,int> nameAndDurability;
+        nameAndDurability = this->getNameAndDurabilityTool();
+
+        if(nameAndDurability.size() != 1){
+            cout << "item tool berbeda, gabisa di craft";
+        }else{
+            cout << "jadi item baru" << endl;
+        }
+
+    }else if(allToolNonTool["NonTool"] != 0 && allToolNonTool["Tool"] == 0){
+        cout << "isinya nontoolll" << endl;
+
+        map<string,int> allType;
+        allType = this->getSumOfType();
+
+        /*
+        for (it = allType.begin(); it != allType.end(); it++) {
+            cout << it->first << " ";
+            cout << it->second << endl;
+        }
+        cout << allType.size() << endl;
+        */
+    }else{
+        cout << "ada tool & nontoll, gatau harus apa" << endl;
+    }
+    
 
 };
 

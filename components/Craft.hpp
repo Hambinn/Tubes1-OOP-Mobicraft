@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Item.hpp"
 #include "Inventory.hpp"
+#include "ListRecipe.hpp"
 #include <map>
 
 #define MAX_Craft 9
@@ -35,12 +36,12 @@ public :
     bool isCraftInvSlotEmpty(int idx);
 
     map<string,int> getSumOfToolandNonTool();
-
     map<string,int> getSumOfType();
+    map<string,int> getNameAndDurabilityTool();
 
     void moveItem(Inventory *myInv, int idx_inv, int N, int* idx_craft);
 
-    void Crafting(Inventory *myInv,  Craft *myCraft);
+    void Crafting(Inventory *myInv, ListRecipe *resep);
 
 
 };

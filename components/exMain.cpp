@@ -263,20 +263,11 @@ int main(){
     map<string,int> type;
     map<string,int>::iterator it;
 
-    tool = mobitaCraft->getSumOfToolandNonTool();
-    type = mobitaCraft->getSumOfType();
-
-    for (it = tool.begin(); it != tool.end(); it++) {
-        cout << it->first << " ";
-        cout << it->second << endl;
-    }
-    for (it = type.begin(); it != type.end(); it++) {
-        cout << it->first << " ";
-        cout << it->second << endl;
-    }
 
     // //Cara pakai createRecipe
     ListRecipe lr = createRecipe();
+
+    mobitaCraft->Crafting(mobitaInv, &lr);
 
     /*
     cara pake get all type recipe
