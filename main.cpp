@@ -71,12 +71,19 @@ int main() {
     cout << listItemTool[i].getID() << ", " << listItemTool[i].getName() << endl;
 
     // Contoh give Item 
-    // Anggep user input GIVE DIAMOND 2 
-    mobitaInv->giveItem(listItemNonTool[11], 2);
-    // user input GIVE OAK_LOG 20
-    mobitaInv->giveItem(listItemNonTool[0], 20);
-    // user input GIVE DIAMOND 5
-    mobitaInv->giveItem(listItemNonTool[11], 5);
+    string tes, tes2;
+    int tes3;
+    cout << "\nMasukkan ItemNonTool dengan GIVE ITEM QTY (Contoh : GIVE DIAMOND 5)" << endl;
+    cin >> tes >> tes2 >> tes3;
+    if (tes == "GIVE"){
+        for (int i = 0; i < listItemNonTool.size(); i++){
+            if (listItemNonTool[i].getName() == tes2){
+                mobitaInv->giveItem(listItemNonTool[i], tes3);
+                break;
+            }
+        }
+        cout << "\nTidak ada Item NonTool dengan nama : " << tes2;
+    }
 
     // Coba lihat isi mobitaInv
     mobitaInv->showItem();
