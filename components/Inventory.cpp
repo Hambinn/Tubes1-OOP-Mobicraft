@@ -178,6 +178,25 @@ void Inventory::giveItem(ItemTool itemT, int Qty){
     }
 }
 
+void Inventory::giveItem(ItemTool itemT, int Qty, int t_Dty){
+    if (Qty == 1){
+        int i = 0;
+        while (this->getItemName(i) != "-")
+        {
+            i++;
+        }
+        if (i >= 0 && i < 27){
+            this->setItemTool(i, itemT.getID(), itemT.getName(), t_Dty);
+        } else {
+            // throw
+            cout << "Slot Inventory Penuh";
+        }
+    } else {
+        //throw
+        cout << "Qty Item Tool hanya bisa satu";
+    }
+}
+
 void Inventory::discardItem(int idx, int Qty){
     //discard Item Non Tool
     if (this->isFilledNonTool(idx)){

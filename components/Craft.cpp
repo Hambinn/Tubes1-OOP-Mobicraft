@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Craft.hpp"
+#include <bits/stdc++.h>
 using namespace std;
 
 Craft::Craft(){
@@ -86,7 +87,7 @@ void Craft::setItemTool(int idx, int t_id, string t_name, int t_Dty){
     this->craftItem[idx].myTool.Name = t_name;
     this->craftItem[idx].myTool.Durability = t_Dty;
     this->craftItem[idx].filled_NonTool = false;
-    this->craftItem[idx].filled_Tool = false;
+    this->craftItem[idx].filled_Tool = true;
 }
 
 void Craft::deleteItemTool(int idx){
@@ -97,23 +98,29 @@ void Craft::deleteItemTool(int idx){
     this->craftItem[idx].filled_Tool = false;
 }
 
-void Craft::deleteAllTool(){
+void Craft::deleteAllItem(){
     for(int i = 0; i < MAX_Craft; i++){
-        this->deleteItemTool(i);
+        if(this->isCraftInvSlotEmpty(i) == false){
+            if(this->getItem(i).filled_NonTool == true){
+                this->deleteItemNonTool(i);
+            }else{
+                this->deleteItemTool(i);
+            }
+        }
     }
 };
 
 void Craft::isCraftInvSlotEmpty(int N, int* slot_idx){
     int i = 0;
     for (i; i < N; i++){
-        if(this->getItemName(i) != "-"){
+        if(this->getItem(slot_idx[i]).filled_NonTool != false || this->getItem(slot_idx[i]).filled_Tool != false){
             throw "gagal mindahin, ada slot craft table yang sudah terisi";
         }
     }
 };
 
 bool Craft::isCraftInvSlotEmpty(int idx){
-    return (this->getItemName(idx) == "-");
+    return (this->getItem(idx).filled_NonTool == false && this->getItem(idx).filled_Tool == false);
 };
 
 map<string,int> Craft::getSumOfToolandNonTool(){
@@ -123,7 +130,7 @@ map<string,int> Craft::getSumOfToolandNonTool(){
 
     for (int i = 0 ; i < MAX_Craft; i++) {
         if(this->isCraftInvSlotEmpty(i) == false){
-            if(this->getItem(i).filled_NonTool == true){
+            if(this->isFilledTool(i) != true){
                 type["NonTool"] ++;
             }else{
                 type["Tool"] ++;
@@ -184,7 +191,7 @@ void Craft::moveItem(Inventory *myInv, int idx_inv, int N, int* idx_craft){
         try{
             this->isCraftInvSlotEmpty(N, idx_craft);
             if (N == 1){
-                this->setItemNonTool(idx_craft[0], myInv->getItemTool(idx_inv).getID() ,myInv->getItemTool(idx_inv).getName(),myInv->getItemTool(idx_inv).getDurability());
+                this->setItemTool(idx_craft[0], myInv->getItemTool(idx_inv).getID() ,myInv->getItemTool(idx_inv).getName(),myInv->getItemTool(idx_inv).getDurability());
                 myInv->deleteItemTool(idx_inv);
             }
         }catch(const char* err){
@@ -193,32 +200,37 @@ void Craft::moveItem(Inventory *myInv, int idx_inv, int N, int* idx_craft){
     }
 }
 
-void Craft::Crafting(Inventory *myInv, ListRecipe *resep){
+pair<string,int> Craft::Crafting(ListRecipe *resep){
     cout << "CRAFTINGGGG!!!!! :D" << endl;
     map<string,int> allToolNonTool;
     map<string,int>::iterator it;
+    pair<string,int> result;
 
     allToolNonTool = this->getSumOfToolandNonTool();
     
-
     /*
     for (it = allToolNonTool.begin(); it != allToolNonTool.end(); it++) {
         cout << it->first << " ";
         cout << it->second << endl;
     }
-    */   
-
+    */
+      
     if(allToolNonTool["Tool"] != 0 && allToolNonTool["NonTool"] == 0){
         cout << "isinya tool semuaa" << endl;
 
         map<string,int> nameAndDurability;
         nameAndDurability = this->getNameAndDurabilityTool();
-        this->deleteAllTool();
+        this->deleteAllItem();
 
         if(nameAndDurability.size() != 1){
             cout << "item tool berbeda, gabisa di craft";
         }else{
             cout << "jadi item baru" << endl;
+            for (it = nameAndDurability.begin(); it != nameAndDurability.end(); it++) {
+                result.first = it->first;
+                result.second = it->second;
+            }
+            
         }
 
     }else if(allToolNonTool["NonTool"] != 0 && allToolNonTool["Tool"] == 0){
@@ -237,7 +249,35 @@ void Craft::Crafting(Inventory *myInv, ListRecipe *resep){
     }else{
         cout << "ada tool & nontoll, gatau harus apa" << endl;
     }
-    
+    return result;
 
 };
 
+void Craft::showItem(){
+    cout << "\nCrafting Table :\n" << endl;
+    for (int i=0; i< MAX_Craft; i++){
+        // Print jika isinya item NonTool
+        if (this->isFilledNonTool(i) && !this->isFilledTool(i)){
+            cout << "[C " << this->getItemNonTool(i).getName() << " " << this->getItemNonTool(i).getQuantity() << "] ";
+            if ((i+1) % 3 == 0){
+                cout << endl;
+            }
+        } 
+        
+        //Print jika isinya item Tool
+        else if (!this->isFilledNonTool(i) && this->isFilledTool(i)){
+            cout << "[C " << this->getItemTool(i).getName() << " " << this->getItemTool(i).getDurability() << "] ";
+            if ((i+1) % 3 == 0){
+                cout << endl;
+            }
+        }
+
+        //Print jika tidak ada item
+        else if (!this->isFilledNonTool(i) && !this->isFilledTool(i)){
+            cout << "[C " << "-" << " " << 0 << "] ";
+            if ((i+1) % 3 == 0){
+                cout << endl;
+            }
+        }
+    }
+}

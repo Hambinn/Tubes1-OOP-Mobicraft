@@ -5,7 +5,9 @@
 #include "Item.hpp"
 #include "Inventory.hpp"
 #include "ListRecipe.hpp"
+#include "Recipe.hpp"
 #include <map>
+#include <list>
 
 #define MAX_Craft 9
 
@@ -33,7 +35,7 @@ public :
     void setItemTool(int idx, int t_id, string t_name, int t_Dty);
     void deleteItemTool(int idx);
 
-    void deleteAllTool();
+    void deleteAllItem();
 
     void isCraftInvSlotEmpty(int N, int* slot_idx);
 
@@ -45,7 +47,9 @@ public :
 
     void moveItem(Inventory *myInv, int idx_inv, int N, int* idx_craft);
 
-    void Crafting(Inventory *myInv, ListRecipe *resep);
+    // command
+    pair<string,int> Crafting(ListRecipe *resep);
+    void showItem();
 
 
 };

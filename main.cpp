@@ -194,7 +194,7 @@ int main() {
 
     //Print List Non Tool (for Debug)
     cout << "\nItem Tool Available : " << endl;
-    for(int i=0; i < listItemNonTool.size(); i++)
+    for(int i=0; i < listItemTool.size(); i++)
     cout << listItemTool[i].getID() << ", " << listItemTool[i].getName() << endl;
 
     // Contoh give Item dari input
@@ -214,18 +214,47 @@ int main() {
     }
    mobitaInv->giveItem(listItemTool[24],1);
     */
-    mobitaInv->giveItem(listItemTool[10],1);
     mobitaInv->giveItem(listItemTool[1],1);
-    mobitaInv->giveItem(listItemNonTool[1],2);
+    mobitaInv->giveItem(listItemTool[1],1);
+    mobitaInv->giveItem(listItemNonTool[3],2);
 
     // Coba lihat isi mobitaInv
     mobitaInv->showItem();
+    // Coba lihat isi mobitaCraft
+    mobiCraft->showItem();
 
+    int slot_craft[1] = {0};
+    mobiCraft->moveItem(mobitaInv, 0, 1, slot_craft);
+
+    int slot_craft1[1] = {1};
+    mobiCraft->moveItem(mobitaInv, 1, 1, slot_craft1);
+
+    // Coba lihat isi mobitaInv
+    mobitaInv->showItem();
+    // Coba lihat isi mobitaCraft
+    mobiCraft->showItem();
+
+    
     // coba bikin resep
     ListRecipe lr = createRecipe();
 
     map<string,int> type;
     map<string,int>::iterator it;
+    pair<string,int> hasilCraft;
+
+    hasilCraft = mobiCraft->Crafting(&lr);
+
+    for (int i = 0; i < listItemNonTool.size(); i++){
+        if (listItemTool[i].getName() == hasilCraft.first){
+            mobitaInv->giveItem(listItemTool[i], 1, hasilCraft.second);
+            break;
+        }
+    }
+
+    // Coba lihat isi mobitaInv
+    mobitaInv->showItem();
+    // Coba lihat isi mobitaCraft
+    mobiCraft->showItem();
 
     //print list resep buat debug
     /*

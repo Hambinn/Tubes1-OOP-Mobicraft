@@ -267,7 +267,7 @@ int main(){
     // //Cara pakai createRecipe
     ListRecipe lr = createRecipe();
 
-    mobitaCraft->Crafting(mobitaInv, &lr);
+    mobitaCraft->Crafting(&lr);
 
     /*
     cara pake get all type recipe
