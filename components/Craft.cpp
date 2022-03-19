@@ -228,7 +228,11 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
             cout << "jadi item baru" << endl;
             for (it = nameAndDurability.begin(); it != nameAndDurability.end(); it++) {
                 result.first = it->first;
-                result.second = it->second;
+                if(it->second > 10){
+                    result.second = 10;
+                }else{
+                    result.second = it->second;
+                }
             }
             
         }

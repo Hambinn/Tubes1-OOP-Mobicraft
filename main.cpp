@@ -242,7 +242,7 @@ int main() {
     map<string,int>::iterator it;
     pair<string,int> hasilCraft;
 
-    hasilCraft = mobiCraft->Crafting(&lr);
+    hasilCraft = mobiCraft->Crafting(&lr);  //buat yang hasilnya tool, dia return nama item & durability. buat yg non tool. return nama item & quantity
 
     for (int i = 0; i < listItemNonTool.size(); i++){
         if (listItemTool[i].getName() == hasilCraft.first){
@@ -257,12 +257,14 @@ int main() {
     mobiCraft->showItem();
 
     //print list resep buat debug
-    /*
+    
     for(int i=0; i < lr.get_neff(); i++){
         cout << endl;
+        cout << "col" << lr.get_recipe(i).get_col() << endl;
+        cout << "row" << lr.get_recipe(i).get_row() << endl;
         lr.get_recipe(i).display_recipe();
     }
-    */
+    
 
 //   // read recipes
 //   for (const auto &entry :
