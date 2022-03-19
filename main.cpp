@@ -216,19 +216,19 @@ int main() {
     */
     mobitaInv->giveItem(listItemTool[1],1);
     mobitaInv->giveItem(listItemTool[1],1);
-    mobitaInv->giveItem(listItemNonTool[3],1);
-    mobitaInv->giveItem(listItemNonTool[4],1);
+    mobitaInv->giveItem(listItemNonTool[11],5);
+    mobitaInv->giveItem(listItemNonTool[6],5);
 
     // Coba lihat isi mobitaInv
     mobitaInv->showItem();
     // Coba lihat isi mobitaCraft
     mobiCraft->showItem();
 
-    int slot_craft[1] = {0};
-    mobiCraft->moveItem(mobitaInv, 2, 1, slot_craft);
+    int slot_craft[3] = {0,1,2};
+    mobiCraft->moveItem(mobitaInv, 2, 3, slot_craft);
 
-    int slot_craft1[1] = {3};
-    mobiCraft->moveItem(mobitaInv, 3, 1, slot_craft1);
+    int slot_craft1[2] = {4,7};
+    mobiCraft->moveItem(mobitaInv, 3, 2, slot_craft1);
 
     // Coba lihat isi mobitaInv
     mobitaInv->showItem();
@@ -242,7 +242,9 @@ int main() {
     pair<string,int> hasilCraft;
     hasilCraft = mobiCraft->Crafting(&lr);  //buat yang hasilnya tool, dia return nama item & durability. buat yg non tool. return nama item & quantity
 
-    for (int i = 0; i < listItemNonTool.size(); i++){
+    // give item tool
+
+    for (int i = 0; i < listItemTool.size(); i++){
         if (listItemTool[i].getName() == hasilCraft.first){
             mobitaInv->giveItem(listItemTool[i], 1, hasilCraft.second);
             break;

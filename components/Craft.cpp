@@ -203,6 +203,40 @@ void Craft::moveItem(Inventory *myInv, int idx_inv, int N, int* idx_craft){
     }
 }
 
+bool Craft::findKecocokanRecipe(ListRecipe *resep, int idx_recipe){
+    bool found = false;
+    if((resep->get_recipe(idx_recipe).get_row() == 3) && (resep->get_recipe(idx_recipe).get_col() == 3)){
+        found = true;
+        int i = 0;
+        int j = 0;
+        while(i < 3){
+            j = 0;
+            while(j < 3){
+                if((resep->get_recipe(idx_recipe).get_item(i,j) == "-") && (isCraftInvSlotEmpty((3 * i) + j) == false)){
+                    found = false;
+                    break;
+                }else{
+                    if(resep->get_recipe(idx_recipe).get_item(i,j) != this->getItem((3 * i) + j).myNonTool.getType()){
+                        if(resep->get_recipe(idx_recipe).get_item(i,j) != this->getItem((3 * i) + j).myNonTool.getName()){
+                            found = false;
+                            break;
+                        }
+                    }
+                }
+                j++;
+            }
+            if(found == false){
+                break;
+            }else{
+                i++;
+            }
+        }
+    }else{
+        // belumm
+    }
+    return found;
+};
+
 pair<string,int> Craft::Crafting(ListRecipe *resep){
     cout << "CRAFTINGGGG!!!!! :D" << endl;
     map<string,int> allToolNonTool;
@@ -221,7 +255,6 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
 
         map<string,int> nameAndDurability;
         nameAndDurability = this->getNameAndDurabilityTool();
-        this->deleteAllItem();
 
         if(nameAndDurability.size() != 1){
             cout << "item tool berbeda, gabisa di craft";
@@ -235,6 +268,7 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
                     result.second = it->second;
                 }
             }
+            this->deleteAllItem();
         }
 
     }else if(allToolNonTool["NonTool"] != 0 && allToolNonTool["Tool"] == 0){
@@ -251,6 +285,10 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
             i++;
         }
 
+        for(i=0; i<allType.size(); i++){
+            cout << allTypeArray[i][0] << " " << allTypeArray[i][1] << endl;
+        }
+
         /*
         cout << allType.size() << endl;
         */
@@ -264,39 +302,34 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
 
         while(i < resep->get_neff() && found == false){
             type = resep->get_recipe(i).get_all_type();
-            if(type.size() == allType.size()){
-                j = 0;
-                found = true;
-                while(j < allType.size()){
-                    k = stoi(allTypeArray[j][1]);
-                    if(type[allTypeArray[j][0]] != k){
-                        found = false;
-                        break;
-                    }
-                    j++;
-                }
-                if(found == true){
-                    cout << "ketemuuu di " << i << endl;
-                    resep->get_recipe(i).display_recipe();
+            //resep->get_recipe(i).display_recipe();
+
+            j = 0;
+            found = true;
+            while(j < allType.size()){
+                k = stoi(allTypeArray[j][1]);
+                if(type[allTypeArray[j][0]] != k){
+                    found = false;
                     break;
+                }
+                j++;
+            }
+            if(found == true){
+                cout << "ketemuuu di " << i << endl;
+
+                resep->get_recipe(i).display_recipe();
+                if(this->findKecocokanRecipe(resep, i) == true){
+                    this->deleteAllItem();
+                    result.first = resep->get_recipe(i).get_result();
+                    result.second = resep->get_recipe(i).get_num_of_result();
+                    break;
+                }else{
+                    found = false;
                 }
             }
             i++;
         }
-        
-        /*
-        for(int i=0; i < resep->get_neff(); i++){
-            cout << endl;
-            cout << "col" << resep->get_recipe(i).get_col() << endl;
-            cout << "row" << resep->get_recipe(i).get_row() << endl;
-            type =  resep->get_recipe(i).get_all_type();
-            for (it = type.begin(); it != type.end(); it++) {
-                cout << it->first << " ";
-                cout << it->second << endl;
-            }
-            resep->get_recipe(i).display_recipe();
-        }
-        */
+
     }else{
         cout << "ada tool & nontoll, gatau harus apa" << endl;
     }

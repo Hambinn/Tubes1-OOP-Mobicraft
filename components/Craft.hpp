@@ -48,6 +48,7 @@ public :
     void moveItem(Inventory *myInv, int idx_inv, int N, int* idx_craft);
 
     // command
+    bool findKecocokanRecipe(ListRecipe *resep, int idx_recipe);
     pair<string,int> Crafting(ListRecipe *resep);
     void showItem();
 
