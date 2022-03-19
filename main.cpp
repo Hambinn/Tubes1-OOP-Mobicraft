@@ -55,6 +55,8 @@ int main() {
     string itemConfigPath = configPath + "/item.txt";
     vector<ItemNonTool> listItemNonTool;
     vector<ItemTool> listItemTool;
+    Inventory *mobitaInv = new Inventory();
+    
     // read item from config file
     readItems(&listItemNonTool, &listItemTool, itemConfigPath);
 
@@ -67,6 +69,17 @@ int main() {
     cout << "\nItem Tool Available : " << endl;
     for(int i=0; i < listItemNonTool.size(); i++)
     cout << listItemTool[i].getID() << ", " << listItemTool[i].getName() << endl;
+
+    // Contoh give Item 
+    // Anggep user input GIVE DIAMOND 2 
+    mobitaInv->giveItem(listItemNonTool[11], 2);
+    // user input GIVE OAK_LOG 20
+    mobitaInv->giveItem(listItemNonTool[0], 20);
+    // user input GIVE DIAMOND 5
+    mobitaInv->giveItem(listItemNonTool[11], 5);
+
+    // Coba lihat isi mobitaInv
+    mobitaInv->showItem();
 
 //   // read recipes
 //   for (const auto &entry :
