@@ -94,6 +94,7 @@ int main() {
     */
     mobitaInv->giveItem(listItemTool[1],1);
     mobitaInv->giveItem(listItemTool[1],1);
+    mobitaInv->giveItem(listItemNonTool[0],9);
     mobitaInv->giveItem(listItemNonTool[11],5);
     mobitaInv->giveItem(listItemNonTool[6],5);
 
@@ -102,11 +103,11 @@ int main() {
     // Coba lihat isi mobitaCraft
     mobiCraft->showItem();
 
-    int slot_craft[3] = {0,1,2};
-    mobiCraft->moveItem(mobitaInv, 2, 3, slot_craft);
+    int slot_craft[3] = {0,1,4};
+    mobiCraft->moveItem(mobitaInv, 3, 3, slot_craft);
 
-    int slot_craft1[2] = {4,7};
-    mobiCraft->moveItem(mobitaInv, 3, 2, slot_craft1);
+    int slot_craft1[2] = {3,6};
+    mobiCraft->moveItem(mobitaInv, 4, 2, slot_craft1);
 
     // Coba lihat isi mobitaInv
     mobitaInv->showItem();

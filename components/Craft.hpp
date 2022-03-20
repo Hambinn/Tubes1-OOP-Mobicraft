@@ -49,6 +49,7 @@ public :
 
     // command
     bool findKecocokanRecipe(ListRecipe *resep, int idx_recipe);
+    bool findKecocokanRecipeMirrored(ListRecipe *resep, int idx_recipe);
     pair<string,int> Crafting(ListRecipe *resep);
     void showItem();
 

@@ -232,24 +232,139 @@ bool Craft::findKecocokanRecipe(ListRecipe *resep, int idx_recipe){
             }
         }
     }else{
-        // belumm
+        found = true;
+        int i = 0;
+        int j, k;
+        while(i < MAX_Craft){
+            if(this->isCraftInvSlotEmpty(i) == false){
+                break;
+            }else{
+                i++;
+            }
+        }
+
+        int rowCraft = i / 3;
+        int colCraft = i % 3;
+        j = 0;
+        k = 0;
+
+        while(j < resep->get_recipe(idx_recipe).get_row()){
+            k = 0;
+            while(k < resep->get_recipe(idx_recipe).get_col()){
+                if((3 * (rowCraft + j)) + (colCraft + k) > 9){
+                    found = false;
+                    break;
+                }else{
+                    if((resep->get_recipe(idx_recipe).get_item(j,k) == "-") && (isCraftInvSlotEmpty((3 * (rowCraft + j)) + (colCraft + k)) == false)){
+                        found = false;
+                        break;
+                    }else{
+                        if(resep->get_recipe(idx_recipe).get_item(j,k) != this->getItem((3 * (rowCraft + j)) + (colCraft + k)).myNonTool.getType()){
+                            if(resep->get_recipe(idx_recipe).get_item(j,k) != this->getItem((3 * (rowCraft + j)) + (colCraft + k)).myNonTool.getName()){
+                                found = false;
+                                break;
+                            }
+                        } 
+                    }
+                }
+                k++;
+            }
+            if(found == false){
+                break;
+            }else{
+                j++;
+            }
+        }
     }
     return found;
 };
 
+bool Craft::findKecocokanRecipeMirrored(ListRecipe *resep, int idx_recipe){
+    bool found = false;
+    if((resep->get_recipe(idx_recipe).get_row() == 3) && (resep->get_recipe(idx_recipe).get_col() == 3)){
+        found = true;
+        int i = 0;
+        int j = 0;
+        while(i < 3){
+            j = 0;
+            while(j < 3){
+                if((resep->get_recipe(idx_recipe).get_item_mirror(i,j) == "-") && (isCraftInvSlotEmpty((3 * i) + j) == false)){
+                    found = false;
+                    break;
+                }else{
+                    if(resep->get_recipe(idx_recipe).get_item_mirror(i,j) != this->getItem((3 * i) + j).myNonTool.getType()){
+                        if(resep->get_recipe(idx_recipe).get_item_mirror(i,j) != this->getItem((3 * i) + j).myNonTool.getName()){
+                            found = false;
+                            break;
+                        }
+                    }
+                }
+                j++;
+            }
+            if(found == false){
+                break;
+            }else{
+                i++;
+            }
+        }
+    }else{
+        found = true;
+        int i = 0;
+        int j, k;
+        while(i < MAX_Craft){
+            if(this->isCraftInvSlotEmpty(i) == false){
+                break;
+            }else{
+                i++;
+            }
+        }
+
+        int rowCraft = i / 3;
+        int colCraft = i % 3;
+        j = 0;
+        k = 0;
+
+        while(j < resep->get_recipe(idx_recipe).get_row()){
+            k = 0;
+            while(k < resep->get_recipe(idx_recipe).get_col()){
+                if((3 * (rowCraft + j)) + (colCraft + k) > 9){
+                    found = false;
+                    break;
+                }else{
+                    if((resep->get_recipe(idx_recipe).get_item_mirror(j,k) == "-") && (isCraftInvSlotEmpty((3 * (rowCraft + j)) + (colCraft + k)) == false)){
+                        found = false;
+                        break;
+                    }else{
+                        if(resep->get_recipe(idx_recipe).get_item_mirror(j,k) != this->getItem((3 * (rowCraft + j)) + (colCraft + k)).myNonTool.getType()){
+                            if(resep->get_recipe(idx_recipe).get_item_mirror(j,k) != this->getItem((3 * (rowCraft + j)) + (colCraft + k)).myNonTool.getName()){
+                                found = false;
+                                break;
+                            }
+                        } 
+                    }
+                }
+                k++;
+            }
+            if(found == false){
+                break;
+            }else{
+                j++;
+            }
+        }
+    }
+    return found;
+};
+
+
+
 pair<string,int> Craft::Crafting(ListRecipe *resep){
-    cout << "CRAFTINGGGG!!!!! :D" << endl;
+    cout << endl << "CRAFTINGGGG!!!!! :D" << endl;
     map<string,int> allToolNonTool;
     map<string,int>::iterator it;
     pair<string,int> result;
 
     allToolNonTool = this->getSumOfToolandNonTool();
-    /*
-    for (it = allToolNonTool.begin(); it != allToolNonTool.end(); it++) {
-        cout << it->first << " ";
-        cout << it->second << endl;
-    }
-    */
+
     if(allToolNonTool["Tool"] != 0 && allToolNonTool["NonTool"] == 0){
         cout << "isinya tool semuaa" << endl;
 
@@ -259,7 +374,6 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
         if(nameAndDurability.size() != 1){
             cout << "item tool berbeda, gabisa di craft";
         }else{
-            cout << "jadi item baru" << endl;
             for (it = nameAndDurability.begin(); it != nameAndDurability.end(); it++) {
                 result.first = it->first;
                 if(it->second > 10){
@@ -284,14 +398,6 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
             allTypeArray[i][1] = to_string(it->second);
             i++;
         }
-
-        for(i=0; i<allType.size(); i++){
-            cout << allTypeArray[i][0] << " " << allTypeArray[i][1] << endl;
-        }
-
-        /*
-        cout << allType.size() << endl;
-        */
        
         map<string,int> type;
         map<string,int>::iterator it1;
@@ -302,7 +408,6 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
 
         while(i < resep->get_neff() && found == false){
             type = resep->get_recipe(i).get_all_type();
-            //resep->get_recipe(i).display_recipe();
 
             j = 0;
             found = true;
@@ -315,26 +420,33 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
                 j++;
             }
             if(found == true){
-                cout << "ketemuuu di " << i << endl;
-
-                resep->get_recipe(i).display_recipe();
                 if(this->findKecocokanRecipe(resep, i) == true){
                     this->deleteAllItem();
                     result.first = resep->get_recipe(i).get_result();
                     result.second = resep->get_recipe(i).get_num_of_result();
                     break;
                 }else{
-                    found = false;
+                    if(this->findKecocokanRecipeMirrored(resep, i) == true){
+                        this->deleteAllItem();
+                        result.first = resep->get_recipe(i).get_result();
+                        result.second = resep->get_recipe(i).get_num_of_result();
+                        break;
+                    }else{
+                        found = false;
+                    }
                 }
             }
             i++;
+        }
+        if(found == false){
+            result.first = "not found";
+            result.second = 0;
         }
 
     }else{
         cout << "ada tool & nontoll, gatau harus apa" << endl;
     }
     return result;
-
 };
 
 void Craft::showItem(){
