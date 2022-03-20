@@ -10,7 +10,6 @@ private:
 
 public:
     ListRecipe();
-    ListRecipe(int size);
     ListRecipe(const ListRecipe& lr);
     ~ListRecipe();
 
