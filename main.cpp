@@ -11,27 +11,21 @@ using namespace std;
 
 
 void readItems(vector<ItemNonTool> *itemsNT, vector<ItemTool> *itemsT, string fileName){
-
     ifstream itemConfigaFile(fileName.c_str());
-
-    // to do: use exception in this block
-    if (!itemConfigaFile){
-        cerr <<"Cannot open the File: " <<fileName<<endl;
-        exit(1);
-    }
-
     string line;
+    vector<ItemNonTool> vectorOfItemsNt;
+    vector<ItemTool> vectorOfItemsT;
     while (getline(itemConfigaFile, line)){
+        stringstream iline(line);
+        string elementsInLine;
+
         ItemNonTool itemNT;
         ItemTool itemT;
-        stringstream iline(line);
         vector<string> elementsInVector;
-        string elementsInLine;
+        
         int i=0;
         while (getline(iline,elementsInLine,' ')){
             elementsInVector.push_back(elementsInLine);
-            //cout << elementsInVector[i] << endl;
-            //cout << "i now" << i << endl;
             i++;
         }
         if (elementsInVector[3] == "NONTOOL"){
@@ -45,7 +39,6 @@ void readItems(vector<ItemNonTool> *itemsNT, vector<ItemTool> *itemsT, string fi
             itemsT->push_back(itemT);
         }
     }
-
     itemConfigaFile.close();
 }
 

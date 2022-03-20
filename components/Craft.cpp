@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Craft.hpp"
+#include "Exception.hpp"
 using namespace std;
 
 Craft::Craft(){
@@ -88,6 +89,8 @@ void Craft::isCraftInvSlotEmpty(int N, int* slot_idx){
     for (i; i < N; i++){
         if(this->getItemName(i) != "-"){
             throw "gagal mindahin, ada slot craft table yang sudah terisi";
+            //Exception error("craftInvSlotIsNotEmpty");
+            //throw error;
         }
     }
 };
