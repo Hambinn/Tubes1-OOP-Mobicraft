@@ -14,7 +14,7 @@ ListRecipe::ListRecipe() {
     int cnt_recipe = 0;
     struct dirent *d;
     DIR *dr;
-    dr = opendir("../config/recipe");
+    dr = opendir("./config/recipe");
     if(dr!=NULL)
     {
         for(d=readdir(dr); d!=NULL; d=readdir(dr))
@@ -64,7 +64,7 @@ ListRecipe::ListRecipe() {
 
     //read every recipe from config
     for (auto i = recipe_name.begin(); i != recipe_name.end(); i++){
-        string path = "../config/recipe/";
+        string path = "./config/recipe/";
         path += *i;
         fstream newfile(path);
         string tp;
