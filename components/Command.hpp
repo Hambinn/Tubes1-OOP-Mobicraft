@@ -8,19 +8,21 @@
 #include "Item.hpp"
 using namespace std;
 
+
 class Command{
     private:
         string command;
         vector<string> commandParsed;
         Inventory* inventory;
         Craft* craft;
-        
+        vector<ItemNonTool> listItemNonTool;
+        vector<ItemTool> listItemTool;
     public:
-        Command(string s, Inventory* i, Craft* cr);   
+        Command(string s, Inventory* i, Craft* cr, vector<ItemNonTool> listItemNonTool, vector<ItemTool> listItemTool);   
         Command(Command& c);
-        vector<string> parseCommand();
+        vector<string> parseCommand(string command);
         void giveCommand();
-        vector<string> show(vector<string>);
+        void show();
         vector<string> give(vector<string>);
         vector<string> discard(vector<string>);
         vector<string> move(vector<string>);
