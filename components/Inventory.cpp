@@ -57,10 +57,11 @@ ItemNonTool Inventory::getItemNonTool(int idx){
     return this->getItem(idx).myNonTool;
 }
 
-void Inventory::setItemNonTool(int idx, int t_id, string t_name, int t_Qty){
+void Inventory::setItemNonTool(int idx, int t_id, string t_name, int t_Qty, string t_typ){
     this->myItem[idx].myNonTool.ID = t_id;
     this->myItem[idx].myNonTool.Name = t_name;
     this->myItem[idx].myNonTool.Quantity = t_Qty;
+    this->myItem[idx].myNonTool.Type = t_typ;
     this->myItem[idx].filled_NonTool = true;
     this->myItem[idx].filled_Tool = false;
 }
@@ -83,7 +84,7 @@ void Inventory::setItemTool(int idx, int t_id, string t_name, int t_Dty){
     this->myItem[idx].myTool.Name = t_name;
     this->myItem[idx].myTool.Durability = t_Dty;
     this->myItem[idx].filled_NonTool = false;
-    this->myItem[idx].filled_Tool = false;
+    this->myItem[idx].filled_Tool = true;
 }
 
 void Inventory::deleteItemTool(int idx){
@@ -92,6 +93,35 @@ void Inventory::deleteItemTool(int idx){
     this->myItem[idx].myTool.Durability = 0;
     this->myItem[idx].filled_NonTool = false;
     this->myItem[idx].filled_Tool = false;
+}
+
+void Inventory::showItem(){
+    cout << "\nInventory :\n" << endl;
+    for (int i=0; i< MAX_Inventory; i++){
+        // Print jika isinya item NonTool
+        if (this->isFilledNonTool(i) && !this->isFilledTool(i)){
+            cout << "[I " << this->getItemNonTool(i).getName() << " " << this->getItemNonTool(i).getQuantity() << "] ";
+            if ((i+1) % 9 == 0){
+                cout << endl;
+            }
+        } 
+        
+        //Print jika isinya item Tool
+        else if (!this->isFilledNonTool(i) && this->isFilledTool(i)){
+            cout << "[I " << this->getItemTool(i).getName() << " " << this->getItemTool(i).getDurability() << "] ";
+            if ((i+1) % 9 == 0){
+                cout << endl;
+            }
+        }
+
+        //Print jika tidak ada item
+        else if (!this->isFilledNonTool(i) && !this->isFilledTool(i)){
+            cout << "[I " << "-" << " " << 0 << "] ";
+            if ((i+1) % 9 == 0){
+                cout << endl;
+            }
+        }
+    }
 }
 
 void Inventory::giveItem(ItemNonTool itemNT, int Qty){
@@ -111,22 +141,60 @@ void Inventory::giveItem(ItemNonTool itemNT, int Qty){
         //Jika ada, tambah Qty pada item tersebut
         if(found){
             int newQty = this->getItem(idx).myNonTool.getQuantity() + Qty;
-            this->setItemNonTool(idx, itemNT.getID(), itemNT.getName(), newQty);
+            this->setItemNonTool(idx, itemNT.getID(), itemNT.getName(), newQty, itemNT.getType());
 
         //Jika tidak, buat item baru pada inventory dengan indeks terkecil
         } else {
             int i = 0;
-            while (this->getItem(i).myNonTool.getID() != 0)
+            while (this->getItemName(i) != "-")
             {
                 i++;
             }
-            if (i > 0 && i < 27){
-                this->setItemNonTool(i,itemNT.getID(), itemNT.getName(), Qty);
+            if (i >= 0 && i < 27){
+                this->setItemNonTool(i,itemNT.getID(), itemNT.getName(), Qty, itemNT.getType());
             } else {
-                // jadi throw ntar
+                // throw
                 cout << "Slot Inventory Penuh";
             }
         }
+    }
+}
+
+void Inventory::giveItem(ItemTool itemT, int Qty){
+    if (Qty == 1){
+        int i = 0;
+        while (this->getItemName(i) != "-")
+        {
+            i++;
+        }
+        if (i >= 0 && i < 27){
+            this->setItemTool(i, itemT.getID(), itemT.getName(), 1);
+        } else {
+            // throw
+            cout << "Slot Inventory Penuh";
+        }
+    } else {
+        //throw
+        cout << "Qty Item Tool hanya bisa satu";
+    }
+}
+
+void Inventory::giveItem(ItemTool itemT, int Qty, int t_Dty){
+    if (Qty == 1){
+        int i = 0;
+        while (this->getItemName(i) != "-")
+        {
+            i++;
+        }
+        if (i >= 0 && i < 27){
+            this->setItemTool(i, itemT.getID(), itemT.getName(), t_Dty);
+        } else {
+            // throw
+            cout << "Slot Inventory Penuh";
+        }
+    } else {
+        //throw
+        cout << "Qty Item Tool hanya bisa satu";
     }
 }
 
@@ -180,3 +248,16 @@ void Inventory::moveItem(int src, int dest){
         }
     }
 } 
+
+void Inventory::useItem(int idx){
+    if (this->isFilledTool(idx)){
+        this->myItem[idx].myTool.Durability -= 1;
+        if (this->getItemTool(idx).getDurability() == 0){
+            this->deleteItemTool(idx);
+        }
+    }
+    else {
+        //throw
+        cout << "Tidak ada item Tool";
+    }
+}

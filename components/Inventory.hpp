@@ -23,7 +23,7 @@ public:
     string getItemName(int idx);
 
     ItemNonTool getItemNonTool(int idx);
-    void setItemNonTool(int idx, int t_id, string t_name, int t_Qty);
+    void setItemNonTool(int idx, int t_id, string t_name, int t_Qty, string t_typ);
     void deleteItemNonTool(int idx);
 
     ItemTool getItemTool(int idx);
@@ -31,9 +31,14 @@ public:
     void deleteItemTool(int idx);
 
     //Command
+    void showItem();
     void giveItem(ItemNonTool itemNT, int Qty);
+    void giveItem(ItemTool itemT, int Qty);
+    void giveItem(ItemTool itemT, int Qty, int t_Dty);
     void discardItem(int idx, int Qty);
-    void moveItem(int src, int dest);              //Move Item dari Inventory ke Inventory
+    void moveItem(int src, int dest);                     //Move Item dari Inventory ke Inventory
+    void useItem(int idx);
+
  
 };
 

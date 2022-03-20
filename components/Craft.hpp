@@ -4,7 +4,10 @@
 #include <iostream>
 #include "Item.hpp"
 #include "Inventory.hpp"
+#include "ListRecipe.hpp"
+#include "Recipe.hpp"
 #include <map>
+#include <list>
 
 #define MAX_Craft 9
 
@@ -25,20 +28,30 @@ public :
     string getType(int idx);
 
     ItemNonTool getItemNonTool(int idx);
-    void setItemNonTool(int idx, int t_id, string t_name, int t_Qty);
+    void setItemNonTool(int idx, int t_id, string t_name, int t_Qty, string t_typ);
+    void deleteItemNonTool(int idx);
 
     ItemTool getItemTool(int idx);
     void setItemTool(int idx, int t_id, string t_name, int t_Dty);
+    void deleteItemTool(int idx);
+
+    void deleteAllItem();
 
     void isCraftInvSlotEmpty(int N, int* slot_idx);
 
     bool isCraftInvSlotEmpty(int idx);
 
     map<string,int> getSumOfToolandNonTool();
-
     map<string,int> getSumOfType();
+    map<string,int> getNameAndDurabilityTool();
 
-    void Crafting(Inventory *myInv,  Craft *myCraft);
+    void moveItem(Inventory *myInv, int idx_inv, int N, int* idx_craft);
+
+    // command
+    bool findKecocokanRecipe(ListRecipe *resep, int idx_recipe);
+    bool findKecocokanRecipeMirrored(ListRecipe *resep, int idx_recipe);
+    pair<string,int> Crafting(ListRecipe *resep);
+    void showItem();
 
 
 };
