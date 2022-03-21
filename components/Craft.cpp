@@ -111,7 +111,7 @@ void Craft::deleteAllItem(){
     }
 };
 
-void Craft::isCraftInvSlotEmpty(int N, int* slot_idx){
+void Craft::isCraftInvSlotEmpty(int N, vector<int> slot_idx){
     int i = 0;
     for (i; i < N; i++){
         if(this->getItem(slot_idx[i]).filled_NonTool != false || this->getItem(slot_idx[i]).filled_Tool != false){
@@ -170,7 +170,7 @@ map<string,int> Craft::getNameAndDurabilityTool(){
 };
 
 //Move dari Inventory ke Craft
-void Craft::moveItem(Inventory *myInv, int idx_inv, int N, int* idx_craft){
+void Craft::moveItem(Inventory *myInv, int idx_inv, int N, vector<int> idx_craft){
     //Move Item NonTool
     if (myInv->isFilledNonTool(idx_inv)){
         try{
