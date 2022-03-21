@@ -68,7 +68,7 @@ void Command::giveCommand(){
         if(this->commandParsed[3][0] == 'C' && this->commandParsed[1][0] == 'I'){
             this->commandParsed[1].erase(0,1);
             int n = stoi(this->commandParsed[2]);
-            int slot[n];
+            vector<int> slot;
             for(int i=0;i<n;i++){
                 slot[i] = stoi(this->commandParsed[i+3]);
             }
@@ -95,21 +95,21 @@ void Command::giveCommand(){
         }
     }
     }else if(this->commandParsed[0] == "EXPORT"){
-        cout << "EXPORT" << endl;
+        inventory->exportInventory(commandParsed[1]);
     }
 }
 
 
-int main(){
-    vector<ItemNonTool> listItemNonTool;
-    vector<ItemTool> listItemTool;
-    Inventory inventory;
-    Craft craft;
+// int main(){
+//     vector<ItemNonTool> listItemNonTool;
+//     vector<ItemTool> listItemTool;
+//     Inventory inventory;
+//     Craft craft;
 
-    char s[100];
-    cin.getline(s, 100);
-    Command c(s, &inventory, &craft, listItemNonTool, listItemTool);
-    c.giveCommand();
+//     char s[100];
+//     cin.getline(s, 100);
+//     Command c(s, &inventory, &craft, listItemNonTool, listItemTool);
+//     c.giveCommand();
     
-    return 0;
-}
+//     return 0;
+// }

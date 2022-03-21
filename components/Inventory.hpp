@@ -38,7 +38,7 @@ public:
     void discardItem(int idx, int Qty);
     void moveItem(int src, int dest);                     //Move Item dari Inventory ke Inventory
     void useItem(int idx);
-
+    void exportInventory(string fileName);
  
 };
 

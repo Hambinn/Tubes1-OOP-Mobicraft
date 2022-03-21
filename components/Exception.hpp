@@ -10,13 +10,13 @@ class Exception {
         string type;
         T errorElement;
     public:
-        Exception(string type, T errorElement) {
-            this.type=type;
+        Exception(char* type, T errorElement) {
+            this.type=string(type);
             this.errorElement= errorElement;
         }
-        Exception(string type) {
-            this.type=type;
-            this.errorElement=null;
+        Exception(char* type) {
+            this.type=string(type);
+            this.errorElement=NU;
         }
         void printMessage(){
             switch(this.type){
@@ -25,7 +25,8 @@ class Exception {
                     cout << " of " << this.errorElement[1] << "!" << endl;
                 case "commandNotFound":
                     cout << "Error: command " << this.errorElement[0] << " not found!" << endl;
-                case: 
+                case "inventoryFull":
+                    cout << "Error: Inventory is already full!" << endl;
                 default:
                     cout << "Error!" << endl;
             }

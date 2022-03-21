@@ -1,5 +1,8 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include "Inventory.hpp"
+#include "Exception.hpp"
 using namespace std;
 
 
@@ -153,8 +156,7 @@ void Inventory::giveItem(ItemNonTool itemNT, int Qty){
             if (i >= 0 && i < 27){
                 this->setItemNonTool(i,itemNT.getID(), itemNT.getName(), Qty, itemNT.getType());
             } else {
-                // throw
-                cout << "Slot Inventory Penuh";
+                //cout << "lala";
             }
         }
     }
@@ -261,3 +263,25 @@ void Inventory::useItem(int idx){
         cout << "Tidak ada item Tool";
     }
 }
+
+void Inventory::exportInventory(string fileName) {
+    ofstream fileOutput(fileName);
+
+    for (int i=0; i< MAX_Inventory; i++){
+        // Print jika isinya item NonTool
+        if (this->isFilledNonTool(i) && !this->isFilledTool(i)){
+           fileOutput << this->getItemNonTool(i).getName() << ":" << this->getItemNonTool(i).getQuantity() << endl;
+        } 
+        
+        //Print jika isinya item Tool
+        else if (!this->isFilledNonTool(i) && this->isFilledTool(i)){
+           fileOutput << this->getItemNonTool(i).getName() << ":" << this->getItemTool(i).getDurability() << endl;
+        }
+
+        //Print jika tidak ada item
+        else if (!this->isFilledNonTool(i) && !this->isFilledTool(i)){
+           fileOutput << "0:0" << endl;
+        }
+    }
+}
+

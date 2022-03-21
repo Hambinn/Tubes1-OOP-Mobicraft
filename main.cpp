@@ -5,12 +5,10 @@
 #include <string>
 #include <vector>
 #include <sstream>
-#include <dirent.h>
 #include "components/Item.hpp"
 #include "components/Inventory.hpp"
-#include "components/ListRecipe.hpp"
-#include "components/Recipe.hpp"
 #include "components/Craft.hpp"
+#include "components/Command.hpp"
 
 using namespace std;
 
@@ -47,105 +45,35 @@ void readItems(vector<ItemNonTool> *itemsNT, vector<ItemTool> *itemsT, string fi
     itemConfigaFile.close();
 }
 
+
 int main() {
     string configPath = "./config";
     string itemConfigPath = configPath + "/item.txt";
     vector<ItemNonTool> listItemNonTool;
     vector<ItemTool> listItemTool;
-    Inventory *mobitaInv = new Inventory();
-    Craft *mobiCraft = new Craft();
-    
     // read item from config file
     readItems(&listItemNonTool, &listItemTool, itemConfigPath);
 
-    //Print List Non Tool (For Debug)
-    cout << "Item Non Tool Available : "<< endl;
-    for(int i=0; i < listItemNonTool.size(); i++)
-    cout << listItemNonTool[i].getID() << ", " << listItemNonTool[i].getName() << ", " << listItemNonTool[i].getType() << endl;
+    Inventory inventory;
+    Craft craft;
 
-    //Print List Non Tool (for Debug)
-    cout << "\nItem Tool Available : " << endl;
-    for(int i=0; i < listItemTool.size(); i++)
-    cout << listItemTool[i].getID() << ", " << listItemTool[i].getName() << endl;
-
-    // Contoh give Item dari input
-    /*
-    string tes, tes2;
-    int tes3;
-    cout << "\nMasukkan ItemNonTool dengan GIVE ITEM QTY (Contoh : GIVE DIAMOND 5)" << endl;
-    cin >> tes >> tes2 >> tes3;
-    if (tes == "GIVE"){
-        for (int i = 0; i < listItemNonTool.size(); i++){
-            if (listItemNonTool[i].getName() == tes2){
-                mobitaInv->giveItem(listItemNonTool[i], tes3);
-                break;
-            }
-        }
-        cout << "\nTidak ada Item NonTool dengan nama : " << tes2 << endl;
-    }
-   mobitaInv->giveItem(listItemTool[24],1);
-    */
-    mobitaInv->giveItem(listItemTool[1],1);
-    mobitaInv->giveItem(listItemTool[1],1);
-    mobitaInv->giveItem(listItemNonTool[0],9);
-    mobitaInv->giveItem(listItemNonTool[11],5);
-    mobitaInv->giveItem(listItemNonTool[6],5);
-
-    // Coba lihat isi mobitaInv
-    mobitaInv->showItem();
-    // Coba lihat isi mobitaCraft
-    mobiCraft->showItem();
-
-    int slot_craft[3] = {0,1,4};
-    mobiCraft->moveItem(mobitaInv, 3, 3, slot_craft);
-
-    int slot_craft1[2] = {3,6};
-    mobiCraft->moveItem(mobitaInv, 4, 2, slot_craft1);
-
-    // Coba lihat isi mobitaInv
-    mobitaInv->showItem();
-    // Coba lihat isi mobitaCraft
-    mobiCraft->showItem();
-    
-    // coba bikin resep
-    ListRecipe lr;
-
-    //crafting
-    pair<string,int> hasilCraft;
-    hasilCraft = mobiCraft->Crafting(&lr);  //buat yang hasilnya tool, dia return nama item & durability. buat yg non tool. return nama item & quantity
-
-    // give item tool
-
-    for (int i = 0; i < listItemTool.size(); i++){
-        if (listItemTool[i].getName() == hasilCraft.first){
-            mobitaInv->giveItem(listItemTool[i], 1, hasilCraft.second);
-            break;
-        }
+    char commandString[100];
+    cin.getline(commandString, 100);
+    while (commandString!="EXIT") {
+        Command command(commandString, &inventory, &craft, listItemNonTool, listItemTool);
+        command.giveCommand();
+        cin.getline(commandString, 100);
     }
 
-    // Coba lihat isi mobitaInv
-    mobitaInv->showItem();
-    // Coba lihat isi mobitaCraft
-    mobiCraft->showItem();
+    // //Print List Non Tool (For Debug)
+    // cout << "Item Non Tool Available : "<< endl;
+    // for(int i=0; i < listItemNonTool.size(); i++)
+    // cout << listItemNonTool[i].getID() << ", " << listItemNonTool[i].getName() << ", " << listItemNonTool[i].getType() << endl;
 
-    //print list resep buat debug
-    /*
-    map<string,int> type;
-    map<string,int>::iterator it;
-    
-    for(int i=0; i < lr.get_neff(); i++){
-        cout << endl;
-        cout << "col" << lr.get_recipe(i).get_col() << endl;
-        cout << "row" << lr.get_recipe(i).get_row() << endl;
-        type =  lr.get_recipe(i).get_all_type();
-        for (it = type.begin(); it != type.end(); it++) {
-            cout << it->first << " ";
-            cout << it->second << endl;
-        }
-        lr.get_recipe(i).display_recipe();
-    }
-    */
-    
+    // //Print List Non Tool (for Debug)
+    // cout << "\nItem Tool Available : " << endl;
+    // for(int i=0; i < listItemNonTool.size(); i++)
+    // cout << listItemTool[i].getID() << ", " << listItemTool[i].getName() << endl;
 
 //   // read recipes
 //   for (const auto &entry :
