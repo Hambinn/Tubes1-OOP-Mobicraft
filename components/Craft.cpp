@@ -246,8 +246,6 @@ bool Craft::findKecocokanRecipe(ListRecipe *resep, int idx_recipe){
         int rowCraft = i / 3;
         int colCraft = i % 3;
         j = 0;
-        k = 0;
-
         while(j < resep->get_recipe(idx_recipe).get_row()){
             k = 0;
             while(k < resep->get_recipe(idx_recipe).get_col()){
@@ -322,8 +320,6 @@ bool Craft::findKecocokanRecipeMirrored(ListRecipe *resep, int idx_recipe){
         int rowCraft = i / 3;
         int colCraft = i % 3;
         j = 0;
-        k = 0;
-
         while(j < resep->get_recipe(idx_recipe).get_row()){
             k = 0;
             while(k < resep->get_recipe(idx_recipe).get_col()){
@@ -355,24 +351,21 @@ bool Craft::findKecocokanRecipeMirrored(ListRecipe *resep, int idx_recipe){
     return found;
 };
 
-
-
 pair<string,int> Craft::Crafting(ListRecipe *resep){
-    cout << endl << "CRAFTINGGGG!!!!! :D" << endl;
     map<string,int> allToolNonTool;
     map<string,int>::iterator it;
     pair<string,int> result;
 
     allToolNonTool = this->getSumOfToolandNonTool();
 
-    if(allToolNonTool["Tool"] != 0 && allToolNonTool["NonTool"] == 0){
-        cout << "isinya tool semuaa" << endl;
-
+    if(allToolNonTool["Tool"] != 0 && allToolNonTool["NonTool"] == 0){      //tool semua
         map<string,int> nameAndDurability;
         nameAndDurability = this->getNameAndDurabilityTool();
 
         if(nameAndDurability.size() != 1){
-            cout << "item tool berbeda, gabisa di craft";
+            cout << "item tool berbeda, gabisa di craft" << endl;
+            result.first = "not found";
+            result.second = 0;
         }else{
             for (it = nameAndDurability.begin(); it != nameAndDurability.end(); it++) {
                 result.first = it->first;
@@ -385,13 +378,17 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
             this->deleteAllItem();
         }
 
-    }else if(allToolNonTool["NonTool"] != 0 && allToolNonTool["Tool"] == 0){
-        cout << "isinya nontoolll" << endl;
-
+    }else if(allToolNonTool["NonTool"] != 0 && allToolNonTool["Tool"] == 0){        // nontool semua
         map<string,int> allType;
         allType = this->getSumOfType();
-        string allTypeArray[allType.size()][2];
+
         int i = 0;
+        string allTypeArray[allType.size()][2];
+        map<string,int> type;
+        map<string,int>::iterator it1;
+        int indexOfResep = 0;
+        bool found = false;
+        int j, k;
 
         for (it = allType.begin(); it != allType.end(); it++) {
             allTypeArray[i][0] = it->first;
@@ -399,13 +396,7 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
             i++;
         }
        
-        map<string,int> type;
-        map<string,int>::iterator it1;
-        int indexOfResep = 0;
-        bool found = false;
-        int j, k;
         i = 0;
-
         while(i < resep->get_neff() && found == false){
             type = resep->get_recipe(i).get_all_type();
 
@@ -445,6 +436,8 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
 
     }else{
         cout << "ada tool & nontoll, gatau harus apa" << endl;
+        result.first = "not found";
+        result.second = 0;
     }
     return result;
 };
