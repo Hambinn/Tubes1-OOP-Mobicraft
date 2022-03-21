@@ -68,7 +68,7 @@ void Command::giveCommand(){
         if(this->commandParsed[3][0] == 'C' && this->commandParsed[1][0] == 'I'){
             this->commandParsed[1].erase(0,1);
             int n = stoi(this->commandParsed[2]);
-            int slot[n];
+            vector<int> slot;
             for(int i=0;i<n;i++){
                 slot[i] = stoi(this->commandParsed[i+3]);
             }
