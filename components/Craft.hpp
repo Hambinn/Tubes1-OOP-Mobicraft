@@ -37,7 +37,7 @@ public :
 
     void deleteAllItem();
 
-    void isCraftInvSlotEmpty(int N, int* slot_idx);
+    void isCraftInvSlotEmpty(int N, vector<int> slot_idx);
 
     bool isCraftInvSlotEmpty(int idx);
 
@@ -45,7 +45,7 @@ public :
     map<string,int> getSumOfType();
     map<string,int> getNameAndDurabilityTool();
 
-    void moveItem(Inventory *myInv, int idx_inv, int N, int* idx_craft);
+    void moveItem(Inventory *myInv, int idx_inv, int N, vector<int> idx_craft);
 
     // command
     bool findKecocokanRecipe(ListRecipe *resep, int idx_recipe);
