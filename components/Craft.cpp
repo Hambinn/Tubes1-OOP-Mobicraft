@@ -437,7 +437,7 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
         }
 
     }else{
-        cout << "ada tool & nontoll, gatau harus apa" << endl;
+        cout << "ada tool & nontoll, gatau harus apa :(" << endl;
         result.first = "not found";
         result.second = 0;
     }

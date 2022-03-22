@@ -51,6 +51,7 @@ int main() {
     string itemConfigPath = configPath + "/item.txt";
     vector<ItemNonTool> listItemNonTool;
     vector<ItemTool> listItemTool;
+    ListRecipe resep;
     // read item from config file
     readItems(&listItemNonTool, &listItemTool, itemConfigPath);
 
@@ -60,73 +61,20 @@ int main() {
     char commandString[100];
     cout << "Enter command:" << endl;
     cin.getline(commandString, 100);
-    Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool);
+    Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool,&resep);
     while (command->getCommandName()!="EXIT") {
-        try {
-            command->giveCommand();
-        } catch (Exception<int> exception) {
-            exception.printMessage();
-        } catch (Exception<string> exception) {
-            exception.printMessage();
-        }
+       
+        cout << command->getCommandName() << " satu"<< endl;
+        command->giveCommand();
         cout << "Enter command:" << endl;
         delete command;
+        cout << command->getCommandName() << " deleted"<< endl; // TIDAK TERDELETE, ADDIN BANTU KAMI T_T
         cin.getline(commandString, 100);
-        Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool);
+        Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool,&resep);
+        cout << command->getCommandName() << " dua"<< endl;
     }
     delete command;
     cout << "Program ended." << endl;
-    // //Print List Non Tool (For Debug)
-    // cout << "Item Non Tool Available : "<< endl;
-    // for(int i=0; i < listItemNonTool.size(); i++)
-    // cout << listItemNonTool[i].getID() << ", " << listItemNonTool[i].getName() << ", " << listItemNonTool[i].getType() << endl;
-
-    // //Print List Non Tool (for Debug)
-    // cout << "\nItem Tool Available : " << endl;
-    // for(int i=0; i < listItemNonTool.size(); i++)
-    // cout << listItemTool[i].getID() << ", " << listItemTool[i].getName() << endl;
-
-//   // read recipes
-//   for (const auto &entry :
-//        filesystem::directory_iterator(configPath + "/recipe")) {
-//     cout << entry.path() << endl;
-//     // read from file and do something
-//   }
-
-//   // sample interaction
-//   string command;
-//   while (cin >> command) {
-//     if (command == "EXPORT") {
-//       string outputPath;
-//       cin >> outputPath;
-//       ofstream outputFile(outputPath);
-
-//       // hardcode for first test case
-//       outputFile << "21:10" << endl;
-//       outputFile << "6:1" << endl;
-//       for (int i = 2; i < 27; i++) {
-//         outputFile << "0:0" << endl;
-//       }
-
-//       cout << "Exported" << endl;
-//     } else if (command == "CRAFT") {
-//       cout << "TODO" << endl;
-//     } else if (command == "GIVE") {
-//       string itemName;
-//       int itemQty;
-//       cin >> itemName >> itemQty;
-//       cout << "TODO" << endl;
-//     } else if (command == "MOVE") {
-//       string slotSrc;
-//       int slotQty;
-//       string slotDest;
-//       // need to handle multiple destinations
-//       cin >> slotSrc >> slotQty >> slotDest;
-//       cout << "TODO" << endl;
-//     } else {
-//       // todo
-//       cout << "Invalid command" << endl;
-//     }
-//   }
+    
   return 0;
 }
