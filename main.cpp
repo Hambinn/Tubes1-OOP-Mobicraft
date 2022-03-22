@@ -51,6 +51,7 @@ int main() {
     string itemConfigPath = configPath + "/item.txt";
     vector<ItemNonTool> listItemNonTool;
     vector<ItemTool> listItemTool;
+    ListRecipe resep;
     // read item from config file
     readItems(&listItemNonTool, &listItemTool, itemConfigPath);
 
@@ -60,23 +61,17 @@ int main() {
     char commandString[100];
     cout << "Enter command:" << endl;
     cin.getline(commandString, 100);
-    Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool);
+    Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool,&resep);
     while (command->getCommandName()!="EXIT") {
-        // try {
-        //     command->giveCommand();
-        // } catch (Exception<int> &exception) {
-        //     cout << "berhasil catch 1" << endl;
-        //     exception.printMessage();
-        // } catch (Exception<string> &exception) {
-        //     cout << "berhasil catch 2" << endl;
-        //     exception.printMessage();
-        // }
+       
+        cout << command->getCommandName() << " satu"<< endl;
         command->giveCommand();
         cout << "Enter command:" << endl;
         delete command;
+        cout << command->getCommandName() << " deleted"<< endl; // TIDAK TERDELETE, ADDIN BANTU KAMI T_T
         cin.getline(commandString, 100);
-        Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool);
-        cout << "masuk" << endl;
+        Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool,&resep);
+        cout << command->getCommandName() << " dua"<< endl;
     }
     delete command;
     cout << "Program ended." << endl;

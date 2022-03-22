@@ -12,11 +12,12 @@
 #include "Exception.hpp"
 using namespace std;
 
-Command::Command(string s, Inventory* i, Craft* c, vector<ItemNonTool> listItemNonTool, vector<ItemTool> listItemTool){
+Command::Command(string s, Inventory* i, Craft* c, vector<ItemNonTool> listItemNonTool, vector<ItemTool> listItemTool,ListRecipe* resep) {
     this->command = s;
     this->commandParsed = parseCommand(command);
     this->inventory = i;
     this->craft = c;
+    this->resep = resep;
     this->listItemNonTool = listItemNonTool;
     this->listItemTool = listItemTool;
 }
@@ -26,8 +27,15 @@ Command::Command(Command& c){
     this->commandParsed = c.commandParsed;
     this->inventory = c.inventory;
     this->craft = c.craft;
+    this->resep = resep;
     this->listItemNonTool = c.listItemNonTool;
     this->listItemTool = c.listItemTool;
+}
+
+Command::~Command(){
+    this->command.clear();
+    this->commandParsed.clear();
+    cout << "terdeleded" << endl;
 }
 
 vector<string> Command::parseCommand(string command){
@@ -44,6 +52,7 @@ string Command::getCommandName(){
  }
 
 void Command::giveCommand(){
+    // cout << getCommandName() << endl;
     try{
         if(this->commandParsed[0] == "SHOW"){ //SHOW
             craft->showItem();
@@ -90,11 +99,10 @@ void Command::giveCommand(){
             this->commandParsed[1].erase(0,1);
             this->inventory->useItem(stoi(this->commandParsed[1]));
         }else if(this->commandParsed[0] == "CRAFT"){
-            ListRecipe listRecipe;
             pair<string,int> hasilCraft;
-            hasilCraft = craft->Crafting(&listRecipe);
+            hasilCraft = craft->Crafting(this->resep);
             bool found = false;
-
+            
             for (int i = 0; i < listItemTool.size(); i++){
                 if (listItemTool[i].getName() == hasilCraft.first){
                     inventory->giveItem(listItemTool[i], 1, hasilCraft.second);

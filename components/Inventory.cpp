@@ -174,10 +174,10 @@ void Inventory::giveItem(ItemTool itemT, int Qty){
         if (i >= 0 && i < 27){
             this->setItemTool(i, itemT.getID(), itemT.getName(), 10);
         } else {
-            throw new Exception<string>(1);
+            throw Exception<string>(1);
         }
     } else {
-        throw new Exception<string>(4);
+        throw Exception<string>(4);
     }
 }
 
@@ -191,10 +191,10 @@ void Inventory::giveItem(ItemTool itemT, int Qty, int t_Dty){
         if (i >= 0 && i < 27){
             this->setItemTool(i, itemT.getID(), itemT.getName(), t_Dty);
         } else {
-            throw new Exception<string>(1);
+            throw Exception<string>(1);
         }
     } else {
-        throw new Exception<string>(4);
+        throw Exception<string>(4);
     }
 }
 
@@ -207,7 +207,7 @@ void Inventory::discardItem(int idx, int Qty){
         } else if (this->getItem(idx).myNonTool.getQuantity() == Qty){
             this->deleteItemNonTool(idx);
         } else {
-            throw new Exception<int>(5, Qty);
+            throw Exception<int>(5, Qty);
         }
     } 
     //discard Item Tool
@@ -215,20 +215,20 @@ void Inventory::discardItem(int idx, int Qty){
         if (Qty == 1){
             this->deleteItemTool(idx);
         } else {
-            throw new Exception<string>(1);
+            throw Exception<string>(1);
             cout << "Qty Item Tool tidak valid";
         }
     }
     //Tidak ada Item pada idx
     else {
-        throw new Exception<int>(6, idx);
+        throw Exception<int>(6, idx);
     }
 }
 
 //Move Item dari Inventory ke Inventory
 void Inventory::moveItem(int src, int dest){
     if (this->getItemName(src) == "-" || this->getItemName(dest) == "-"){
-        throw new Exception<int>(3, src);
+        throw Exception<int>(3, src);
     } else {
         int Qty1 = this->getItem(src).myNonTool.getQuantity();
         int Qty2 = this->getItem(dest).myNonTool.getQuantity();
@@ -254,7 +254,7 @@ void Inventory::useItem(int idx){
         }
     }
     else {
-        throw new Exception<int>(2, idx);
+        throw Exception<int>(2, idx);
     }
 }
 
