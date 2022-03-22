@@ -52,15 +52,17 @@ void Command::giveCommand(){
             if(this->listItemNonTool[i].Name == this->commandParsed[1]){
                 inventory->giveItem(this->listItemNonTool[i], stoi(this->commandParsed[2]));
                 break;
+                cout << "\nTidak ada Item yang cocok" << endl;
             }
         }
         for(int i = 0;i<this->listItemTool.size();i++){
             if(this->listItemTool[i].Name == this->commandParsed[1]){
                 inventory->giveItem(this->listItemTool[i], stoi(this->commandParsed[2]));
                 break;
+                cout << "\nTidak ada Item yang cocok" << endl;
             }
         }
-        cout << "\nTidak ada Item yang cocok" << endl;
+        
     }else if(this->commandParsed[0] == "DISCARD"){ // DISCARD A N
         this->commandParsed[1].erase(0,1);
         inventory->discardItem(stoi(this->commandParsed[1]), stoi(this->commandParsed[2]));
@@ -70,7 +72,10 @@ void Command::giveCommand(){
             int n = stoi(this->commandParsed[2]);
             vector<int> slot;
             for(int i=0;i<n;i++){
-                slot[i] = stoi(this->commandParsed[i+3]);
+                this->commandParsed[i+3].erase(0,1);
+                cout << this->commandParsed[i+3] << endl;
+                slot.push_back(stoi(this->commandParsed[i+3]));
+                // slot[i] = stoi(this->commandParsed[i+3]);
             }
             craft->moveItem(this->inventory,stoi(this->commandParsed[1]), n, slot);
         }else if(this->commandParsed[3][0] == 'I' && this->commandParsed[1][0] == 'C'){
