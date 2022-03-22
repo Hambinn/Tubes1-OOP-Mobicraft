@@ -131,17 +131,3 @@ void Command::giveCommand(){
     }
 }
 
-
-// int main(){
-//     vector<ItemNonTool> listItemNonTool;
-//     vector<ItemTool> listItemTool;
-//     Inventory inventory;
-//     Craft craft;
-
-//     char s[100];
-//     cin.getline(s, 100);
-//     Command c(s, &inventory, &craft, listItemNonTool, listItemTool);
-//     c.giveCommand();
-    
-//     return 0;
-// }

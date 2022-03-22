@@ -26,10 +26,4 @@ class Command{
         vector<string> parseCommand(string command);
         void giveCommand();
         string getCommandName();
-        vector<string> give(vector<string>);
-        vector<string> discard(vector<string>);
-        vector<string> move(vector<string>);
-        vector<string> use(vector<string>);
-        vector<string> crafts(vector<string>);
-        vector<string> exports(vector<string>);
 };
