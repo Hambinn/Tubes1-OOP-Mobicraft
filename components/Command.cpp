@@ -47,6 +47,7 @@ string Command::getCommandName(){
 void Command::giveCommand(){
     if(this->commandParsed[0] == "SHOW"){ //SHOW
         inventory->showItem();
+        craft->showItem();
     }else if(this->commandParsed[0] == "GIVE"){ // GIVE A N
         for(int i = 0;i<this->listItemNonTool.size();i++){
             if(this->listItemNonTool[i].Name == this->commandParsed[1]){
@@ -73,7 +74,6 @@ void Command::giveCommand(){
             vector<int> slot;
             for(int i=0;i<n;i++){
                 this->commandParsed[i+3].erase(0,1);
-                cout << this->commandParsed[i+3] << endl;
                 slot.push_back(stoi(this->commandParsed[i+3]));
                 // slot[i] = stoi(this->commandParsed[i+3]);
             }
