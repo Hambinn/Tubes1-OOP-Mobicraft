@@ -62,17 +62,21 @@ int main() {
     cin.getline(commandString, 100);
     Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool);
     while (command->getCommandName()!="EXIT") {
-        try {
-            command->giveCommand();
-        } catch (Exception<int> exception) {
-            exception.printMessage();
-        } catch (Exception<string> exception) {
-            exception.printMessage();
-        }
+        // try {
+        //     command->giveCommand();
+        // } catch (Exception<int> &exception) {
+        //     cout << "berhasil catch 1" << endl;
+        //     exception.printMessage();
+        // } catch (Exception<string> &exception) {
+        //     cout << "berhasil catch 2" << endl;
+        //     exception.printMessage();
+        // }
+        command->giveCommand();
         cout << "Enter command:" << endl;
         delete command;
         cin.getline(commandString, 100);
         Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool);
+        cout << "masuk" << endl;
     }
     delete command;
     cout << "Program ended." << endl;

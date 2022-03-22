@@ -172,7 +172,7 @@ void Inventory::giveItem(ItemTool itemT, int Qty){
             i++;
         }
         if (i >= 0 && i < 27){
-            this->setItemTool(i, itemT.getID(), itemT.getName(), 1);
+            this->setItemTool(i, itemT.getID(), itemT.getName(), 10);
         } else {
             throw new Exception<string>(1);
         }
