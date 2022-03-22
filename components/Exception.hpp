@@ -22,31 +22,27 @@ class Exception {
             return this->errorElement;
         }
         void printMessage(){
-            switch(this->type){
-                // case "indexOutOfBound":
-                //     cout << "Error: you are trying to access index " << to_string(this->errorElement[0]);
-                //     cout << " of " << to_string(this->errorElement[1]) << "!" << endl;
-                // case "commandNotFound":
-                //     cout << "Error: command " << this->getErrorElement() << " not found!" << endl;
-                case 1: //inventoryFull 
+                if (this->type==1){ //inventoryFull
                     cout << "Error: inventory is already full!" << endl;
-                case 2: //itemToolNotAvailable
-                    cout << "Error: item tool in I"<< this->getErrorElement() <<  " is not available!";
-                case 3: //"itemNotAvailable"
+                } else if (this->type==2) { //itemToolNotAvailable
+                   cout << "Error: item tool in I"<< this->getErrorElement() <<  " is not available!";
+                } else if (this->type==3) { //"itemNotAvailable"
                     cout << "Error: item in I" << this->getErrorElement() << " is not available!" << endl;
-                case 4: //"giveQuantityNotOne":
+                } else if (this->type=4) { //"giveQuantityNotOne"
                     cout << "Error: quantity of item tool can only = 1" << endl;
-                case 5: //"quantityItemIsNotSufficient":
+                } else if (this->type==5) { //"quantityItemIsNotSufficient"
                     cout << "Error: quantity of item is less than "<< this->getErrorElement() << endl;
-                case 6: // "itemInAnIndexIsNotAvailable":
+                } else if (this->type==6) { // "itemInAnIndexIsNotAvailable"
                     cout << "Error: item in " << this->getErrorElement() << " is not available" << endl;
-                case 7: // "craftInvSlotIsNotEmpty":
+                } else if (this->type==7) { // "craftInvSlotIsNotEmpty"
                     cout << "Error: craft inventory slot is not empty" << endl;
-                case 8: // "cannotOpenFile"
+                } else if (this->type==8) { // "cannotOpenFile"
                     cout << "Error: unable to open " << this->getErrorElement() << " file" << endl;
-                default:
-                    cout << "Error!" << endl;
-            }
+                } else if (this->type==9) { //"indexOutOfBound"
+                    cout << "Error: you are trying to access index " << this->getErrorElement();
+                } else if (this->type==10) {
+                    cout << "Error: unable to open " << this->getErrorElement() << " file" << endl;
+                }
         }
 };
 
