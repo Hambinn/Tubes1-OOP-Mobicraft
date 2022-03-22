@@ -38,9 +38,9 @@ vector<string> Command::parseCommand(string command){
     return v;
 }
 
-// void Command::show(){
-//     inventory->showItem();
-// }
+string Command::getCommandName(){
+   return this->commandParsed[0];  
+ }
 
 
 

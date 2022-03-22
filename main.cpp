@@ -9,6 +9,7 @@
 #include "components/Inventory.hpp"
 #include "components/Craft.hpp"
 #include "components/Command.hpp"
+#include "components/Exception.hpp"
 
 using namespace std;
 
@@ -45,7 +46,6 @@ void readItems(vector<ItemNonTool> *itemsNT, vector<ItemTool> *itemsT, string fi
     itemConfigaFile.close();
 }
 
-
 int main() {
     string configPath = "./config";
     string itemConfigPath = configPath + "/item.txt";
@@ -58,13 +58,24 @@ int main() {
     Craft craft;
 
     char commandString[100];
+    cout << "Enter command:" << endl;
     cin.getline(commandString, 100);
-    while (commandString!="EXIT") {
-        Command command(commandString, &inventory, &craft, listItemNonTool, listItemTool);
-        command.giveCommand();
+    Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool);
+    while (command->getCommandName()!="EXIT") {
+        try {
+            command->giveCommand();
+        } catch (Exception<int> exception) {
+            exception.printMessage();
+        } catch (Exception<string> exception) {
+            exception.printMessage();
+        }
+        cout << "Enter command:" << endl;
+        delete command;
         cin.getline(commandString, 100);
+        Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool);
     }
-
+    delete command;
+    cout << "Program ended." << endl;
     // //Print List Non Tool (For Debug)
     // cout << "Item Non Tool Available : "<< endl;
     // for(int i=0; i < listItemNonTool.size(); i++)

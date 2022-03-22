@@ -22,7 +22,7 @@ class Command{
         Command(Command& c);
         vector<string> parseCommand(string command);
         void giveCommand();
-        void show();
+        string getCommandName();
         vector<string> give(vector<string>);
         vector<string> discard(vector<string>);
         vector<string> move(vector<string>);

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Craft.hpp"
+#include "Exception.hpp"
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -115,9 +116,7 @@ void Craft::isCraftInvSlotEmpty(int N, vector<int> slot_idx){
     int i = 0;
     for (i; i < N; i++){
         if(this->getItem(slot_idx[i]).filled_NonTool != false || this->getItem(slot_idx[i]).filled_Tool != false){
-            throw "gagal mindahin, ada slot craft table yang sudah terisi";
-            //Exception error("craftInvSlotIsNotEmpty");
-            //throw error;
+            throw new Exception<string>(7);
         }
     }
 };
