@@ -159,7 +159,7 @@ void Inventory::giveItem(ItemNonTool itemNT, int Qty){
             if (i >= 0 && i < 27){
                 this->setItemNonTool(i,itemNT.getID(), itemNT.getName(), Qty, itemNT.getType());
             } else {
-                //cout << "lala";
+                throw new Exception<string>(1);
             }
         }
     }
@@ -216,7 +216,6 @@ void Inventory::discardItem(int idx, int Qty){
             this->deleteItemTool(idx);
         } else {
             throw new Exception<string>(1);
-            cout << "Qty Item Tool tidak valid";
         }
     }
     //Tidak ada Item pada idx
@@ -260,16 +259,18 @@ void Inventory::useItem(int idx){
 
 void Inventory::exportInventory(string fileName) {
     ofstream fileOutput(fileName);
-
+    if (!fileOutput.is_open()){
+        throw new Exception<string>(8, fileName);
+    }
     for (int i=0; i< MAX_Inventory; i++){
         // Print jika isinya item NonTool
         if (this->isFilledNonTool(i) && !this->isFilledTool(i)){
-           fileOutput << this->getItemNonTool(i).getName() << ":" << this->getItemNonTool(i).getQuantity() << endl;
+           fileOutput << this->getItemNonTool(i).getID() << ":" << this->getItemNonTool(i).getQuantity() << endl;
         } 
         
         //Print jika isinya item Tool
         else if (!this->isFilledNonTool(i) && this->isFilledTool(i)){
-           fileOutput << this->getItemNonTool(i).getName() << ":" << this->getItemTool(i).getDurability() << endl;
+           fileOutput << this->getItemNonTool(i).getID()  << ":" << this->getItemTool(i).getDurability() << endl;
         }
 
         //Print jika tidak ada item

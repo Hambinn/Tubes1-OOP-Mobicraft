@@ -42,6 +42,8 @@ class Exception {
                     cout << "Error: item in " << this->getErrorElement() << " is not available" << endl;
                 case 7: // "craftInvSlotIsNotEmpty":
                     cout << "Error: craft inventory slot is not empty" << endl;
+                case 8: // "cannotOpenFile"
+                    cout << "Error: unable to open " << this->getErrorElement() << " file" << endl;
                 default:
                     cout << "Error!" << endl;
             }
