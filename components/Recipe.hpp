@@ -8,8 +8,8 @@ using namespace std;
 
 class Recipe{
 private:
-    string** items;
-    string** itemsMirror;
+    string* items;
+    string* itemsMirror;
     string result;
     int row;
     int col;
