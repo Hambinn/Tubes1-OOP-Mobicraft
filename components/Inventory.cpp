@@ -77,6 +77,9 @@ void Inventory::deleteItemNonTool(int idx){
     this->myItem[idx].filled_Tool = false;
 }
 
+void Inventory::setQtyItemNonTool(int idx, int new_Qty){
+    this->myItem[idx].myNonTool.Quantity = new_Qty;
+}
 
 ItemTool Inventory::getItemTool(int idx){
     return this->getItem(idx).myTool;

@@ -178,7 +178,8 @@ void Craft::moveItem(Inventory *myInv, int idx_inv, int N, vector<int> idx_craft
             this->isCraftInvSlotEmpty(N, idx_craft);
             if (myInv->getItemNonTool(idx_inv).getQuantity() >= N){
                 int newQty = myInv->getItem(idx_inv).myNonTool.getQuantity() - N;
-                myInv->getItem(idx_inv).myNonTool.setQuantity(newQty);
+                myInv->setQtyItemNonTool(idx_inv, newQty);
+                //myInv->getItem(idx_inv).myNonTool.setQuantity(newQty);
                 for (int i=0; i<N; i++){
                     this->setItemNonTool(idx_craft[i], myInv->getItemNonTool(idx_inv).getID() ,myInv->getItemNonTool(idx_inv).getName(),1, myInv->getItemNonTool(idx_inv).getType());
                 } 

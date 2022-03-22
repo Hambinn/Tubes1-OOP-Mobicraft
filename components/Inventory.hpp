@@ -25,6 +25,7 @@ public:
     ItemNonTool getItemNonTool(int idx);
     void setItemNonTool(int idx, int t_id, string t_name, int t_Qty, string t_typ);
     void deleteItemNonTool(int idx);
+    void setQtyItemNonTool(int idx, int new_Qty);
 
     ItemTool getItemTool(int idx);
     void setItemTool(int idx, int t_id, string t_name, int t_Dty);
