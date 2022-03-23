@@ -20,9 +20,10 @@ class Command{
         vector<ItemNonTool> listItemNonTool;
         vector<ItemTool> listItemTool;
     public:
-        Command(string s, Inventory* i, Craft* cr, vector<ItemNonTool> listItemNonTool, vector<ItemTool> listItemTool,ListRecipe* resep );   
+        Command(string s, Inventory* i, Craft* cr, vector<ItemNonTool> listItemNonTool, vector<ItemTool> listItemTool,ListRecipe* l );   
         Command(Command& c);
-        ~Command();
+        void Clear();
+        void setCommand(string s);
         vector<string> parseCommand(string command);
         void giveCommand();
         string getCommandName();

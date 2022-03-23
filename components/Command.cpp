@@ -12,12 +12,12 @@
 #include "Exception.hpp"
 using namespace std;
 
-Command::Command(string s, Inventory* i, Craft* c, vector<ItemNonTool> listItemNonTool, vector<ItemTool> listItemTool,ListRecipe* resep) {
+Command::Command(string s, Inventory* i, Craft* c, vector<ItemNonTool> listItemNonTool, vector<ItemTool> listItemTool,ListRecipe* l) {
     this->command = s;
     this->commandParsed = parseCommand(command);
     this->inventory = i;
     this->craft = c;
-    this->resep = resep;
+    this->resep = l;
     this->listItemNonTool = listItemNonTool;
     this->listItemTool = listItemTool;
 }
@@ -27,15 +27,20 @@ Command::Command(Command& c){
     this->commandParsed = c.commandParsed;
     this->inventory = c.inventory;
     this->craft = c.craft;
-    this->resep = resep;
+    this->resep = c.resep;
     this->listItemNonTool = c.listItemNonTool;
     this->listItemTool = c.listItemTool;
 }
 
-Command::~Command(){
+void Command::Clear(){
     this->command.clear();
     this->commandParsed.clear();
-    cout << "terdeleded" << endl;
+    // cout << "terdeleded" << endl;
+}
+
+void Command::setCommand(string s){
+    this->command = s;
+    this->commandParsed = parseCommand(command);
 }
 
 vector<string> Command::parseCommand(string command){
@@ -122,6 +127,8 @@ void Command::giveCommand(){
         }else if(this->commandParsed[0] == "EXPORT"){
             inventory->exportInventory(commandParsed[1]);
         }
+        this->command.clear();
+        this->commandParsed.clear();
     }catch (Exception<int> &exception) {
         cout << "berhasil catch 1" << endl;
         exception.printMessage();

@@ -61,19 +61,21 @@ int main() {
     char commandString[100];
     cout << "Enter command:" << endl;
     cin.getline(commandString, 100);
-    Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool,&resep);
-    while (command->getCommandName()!="EXIT") {
-       
-        cout << command->getCommandName() << " satu"<< endl;
-        command->giveCommand();
+    // Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool,&resep);
+    Command command(commandString, &inventory, &craft, listItemNonTool, listItemTool,&resep);
+    command.giveCommand();
+    while (command.getCommandName()!="EXIT") {
+        command.Clear();
+        // cout << command.getCommandName() << " satu"<< endl;
         cout << "Enter command:" << endl;
-        delete command;
-        cout << command->getCommandName() << " deleted"<< endl; // TIDAK TERDELETE, ADDIN BANTU KAMI T_T
+        // cout << command.getCommandName() << " deleted"<< endl; // TIDAK TERDELETE, ADDIN BANTU KAMI T_T
         cin.getline(commandString, 100);
-        Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool,&resep);
-        cout << command->getCommandName() << " dua"<< endl;
+        command.setCommand(commandString);
+        // Command *command = new Command(commandString, &inventory, &craft, listItemNonTool, listItemTool,&resep);
+        // Command command(commandString, &inventory, &craft, listItemNonTool, listItemTool,&resep);
+        // cout << command.getCommandName() << " dua"<< endl;
+        command.giveCommand();
     }
-    delete command;
     cout << "Program ended." << endl;
     
   return 0;

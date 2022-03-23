@@ -28,7 +28,7 @@ class Exception {
                    cout << "Error: item tool in I"<< this->getErrorElement() <<  " is not available!";
                 } else if (this->type==3) { //"itemNotAvailable"
                     cout << "Error: item in I" << this->getErrorElement() << " is not available!" << endl;
-                } else if (this->type=4) { //"giveQuantityNotOne"
+                } else if (this->type==4) { //"giveQuantityNotOne"
                     cout << "Error: quantity of item tool can only = 1" << endl;
                 } else if (this->type==5) { //"quantityItemIsNotSufficient"
                     cout << "Error: quantity of item is less than "<< this->getErrorElement() << endl;
