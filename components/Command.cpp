@@ -98,12 +98,14 @@ void Command::giveCommand(){
                 vector<int> slot;
                 this->commandParsed[3].erase(0,1);
                 this->commandParsed[1].erase(0,1);
+                slot.push_back(stoi(this->commandParsed[3]));
+                int n = stoi(this->commandParsed[2]);
                 slot.push_back(stoi(this->commandParsed[1]));
-                craft->moveItemBack(inventory,stoi(this->commandParsed[3]), stoi(this->commandParsed[1]), slot);
+                craft->moveItemBack(inventory,stoi(this->commandParsed[1]),n, slot);
             }else if(this->commandParsed[3][0] == 'I' && this->commandParsed[1][0] == 'I'){
                 this->commandParsed[1].erase(0,1);
                 this->commandParsed[3].erase(0,1);
-                inventory->moveItem(stoi(this->commandParsed[1]), stoi(this->commandParsed[2]));
+                inventory->moveItem(stoi(this->commandParsed[1]), stoi(this->commandParsed[3]));
             }
         }else if(this->commandParsed[0] == "USE"){
             this->commandParsed[1].erase(0,1);
