@@ -205,6 +205,29 @@ void Craft::moveItem(Inventory *myInv, int idx_inv, int N, vector<int> idx_craft
     }
 }
 
+// move item dari craft table ke inventory
+void Craft::moveItemBack(Inventory *myInv, int idx_craft, int N, vector<int> idx_inv){
+    //Move Item NonTool
+    if(this->isFilledNonTool(idx_craft)){
+        if(myInv->getItemNonTool(idx_inv[0]).getName() == "-"){
+            myInv->setItemNonTool(idx_inv[0],this->getItemNonTool(idx_craft).getID(), this->getItemNonTool(idx_craft).getName(), 1, this->getItemNonTool(idx_craft).getType());
+            this->deleteItemNonTool(idx_craft);
+        }else{
+            int newQty = myInv->getItem(idx_inv[0]).myNonTool.getQuantity() + 1;
+            myInv->setQtyItemNonTool(idx_inv[0], newQty);
+            this->deleteItemNonTool(idx_craft);
+        }
+    }else{ // move item tool
+        if(myInv->getItemName(idx_inv[0]) != "-"){
+            throw Exception<string>(4);
+        }else{
+            myInv->setItemTool(idx_inv[0], this->getItemTool(idx_craft).getID(), this->getItemTool(idx_craft).getName(), this->getItemTool(idx_craft).getDurability());
+            this->deleteItemTool(idx_craft);
+        }
+    }
+
+}
+
 bool Craft::findKecocokanRecipe(ListRecipe *resep, int idx_recipe){
     bool found = false;
     if((resep->get_recipe(idx_recipe).get_row() == 3) && (resep->get_recipe(idx_recipe).get_col() == 3)){

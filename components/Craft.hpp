@@ -45,9 +45,10 @@ public :
     map<string,int> getSumOfType();
     map<string,int> getNameAndDurabilityTool();
 
-    void moveItem(Inventory *myInv, int idx_inv, int N, vector<int> idx_craft);
 
     // command
+    void moveItem(Inventory *myInv, int idx_inv, int N, vector<int> idx_craft);
+    void moveItemBack(Inventory *myInv, int idx_inv, int N, vector<int> idx_craft);
     bool findKecocokanRecipe(ListRecipe *resep, int idx_recipe);
     bool findKecocokanRecipeMirrored(ListRecipe *resep, int idx_recipe);
     pair<string,int> Crafting(ListRecipe *resep);
