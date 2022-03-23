@@ -95,6 +95,11 @@ void Command::giveCommand(){
                 craft->moveItem(inventory,stoi(this->commandParsed[1]), n, slot);
             }else if(this->commandParsed[3][0] == 'I' && this->commandParsed[1][0] == 'C'){
                 // belom di implemen
+                vector<int> slot;
+                this->commandParsed[3].erase(0,1);
+                this->commandParsed[1].erase(0,1);
+                slot.push_back(stoi(this->commandParsed[1]));
+                craft->moveItemBack(inventory,stoi(this->commandParsed[3]), stoi(this->commandParsed[1]), slot);
             }else if(this->commandParsed[3][0] == 'I' && this->commandParsed[1][0] == 'I'){
                 this->commandParsed[1].erase(0,1);
                 this->commandParsed[3].erase(0,1);

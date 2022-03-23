@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Craft.hpp"
 #include "Exception.hpp"
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
 using namespace std;
 
 Craft::Craft(){
