@@ -153,7 +153,14 @@ void Inventory::giveItem(ItemNonTool itemNT, int Qty){
         //Jika ada, tambah Qty pada item tersebut
         if(found){
             int newQty = this->getItem(idx).myNonTool.getQuantity() + Qty;
-            this->setItemNonTool(idx, itemNT.getID(), itemNT.getName(), newQty, itemNT.getType());
+            if (newQty <= 64){
+                this->setItemNonTool(idx, itemNT.getID(), itemNT.getName(), newQty, itemNT.getType());
+            } else {
+                this->setItemNonTool(idx, itemNT.getID(), itemNT.getName(), 64, itemNT.getType());
+                int newQty_1 = newQty - 64;
+                giveItem(itemNT, newQty_1);
+            }
+            
 
         //Jika tidak, buat item baru pada inventory dengan indeks terkecil
         } else {
@@ -168,6 +175,10 @@ void Inventory::giveItem(ItemNonTool itemNT, int Qty){
                 throw new Exception<string>(1);
             }
         }
+    } else {
+        int Qty_1 = Qty - 64;
+        giveItem(itemNT, 64);
+        giveItem(itemNT,Qty_1);
     }
 }
 void Inventory::giveItem(ItemTool itemT, int Qty){
@@ -233,24 +244,33 @@ void Inventory::discardItem(int idx, int Qty){
 
 //Move Item dari Inventory ke Inventory
 void Inventory::moveItem(int src, int dest){
-    if (this->getItemName(src) == "-" || this->getItemName(dest) == "-"){
-        throw Exception<int>(3, src);
-    } else if (this->getItemName(src) != this->getItemName(dest)){
-        throw Exception<int>(16, src);
-    } else {
-        int Qty1 = this->getItem(src).myNonTool.getQuantity();
-        int Qty2 = this->getItem(dest).myNonTool.getQuantity();
-
-        if (Qty1 + Qty2 <= 64){
-            int newQty = Qty1 + Qty2;
-            this->myItem[dest].myNonTool.Quantity = newQty;
-            this->deleteItemNonTool(src);
+    if (src <= 26 && dest <= 26){
+        if (this->getItemName(src) == "-" || this->getItemName(dest) == "-"){
+            if (this->getItemName(src) == "-"){
+                throw Exception<int>(3, src);
+            } else if (this->getItemName(dest) == "-"){
+                throw Exception<int>(3, dest);
+            }
+        } else if (this->getItemName(src) != this->getItemName(dest)){
+            throw Exception<int>(16, src);
         } else {
-            int newQty1 = 64 - Qty1;
-            int newQty2 = 64;
-            this->myItem[src].myNonTool.Quantity = Qty1 - newQty1;
-            this->myItem[dest].myNonTool.Quantity = newQty2;
+            int Qty1 = this->getItem(src).myNonTool.getQuantity();
+            int Qty2 = this->getItem(dest).myNonTool.getQuantity();
+
+            if (Qty1 + Qty2 <= 64){
+                int newQty = Qty1 + Qty2;
+                this->myItem[dest].myNonTool.Quantity = newQty;
+                this->deleteItemNonTool(src);
+            } else {
+                int newQty1 = 64 - Qty2;
+                int newQty2 = 64;
+                this->myItem[src].myNonTool.Quantity = Qty1 - newQty1;
+                this->myItem[dest].myNonTool.Quantity = newQty2;
+            }
         }
+    }
+    else {
+        throw Exception<int>(17, src);
     }
 } 
 

@@ -188,6 +188,9 @@ void Craft::moveItem(Inventory *myInv, int idx_inv, int N, vector<int> idx_craft
                     myInv->deleteItemNonTool(idx_inv);
                 }
             }
+            else {
+                throw Exception<int>(5, N);
+            }
         }catch(Exception<string> &exception){
             exception.printMessage();
         }catch(Exception<int> &exception){
@@ -219,20 +222,28 @@ void Craft::moveItemBack(Inventory *myInv, int idx_craft, int N, vector<int> idx
         if(myInv->getItemNonTool(idx_inv[0]).getName() == "-"){
             myInv->setItemNonTool(idx_inv[0],this->getItemNonTool(idx_craft).getID(), this->getItemNonTool(idx_craft).getName(), 1, this->getItemNonTool(idx_craft).getType());
             this->deleteItemNonTool(idx_craft);
-        }else if (this->getItemName(idx_craft) == myInv->getItemNonTool(idx_inv[0]).getName()){
+        }else if (this->getItemName(idx_craft) == myInv->getItemNonTool(idx_inv[0]).getName()){\
             int newQty = myInv->getItem(idx_inv[0]).myNonTool.getQuantity() + 1;
-            myInv->setQtyItemNonTool(idx_inv[0], newQty);
-            this->deleteItemNonTool(idx_craft);
+            if (newQty <= 64){
+                myInv->setQtyItemNonTool(idx_inv[0], newQty);
+                this->deleteItemNonTool(idx_craft);
+            } else {
+                throw Exception<int>(1, idx_craft);
+            }
         } else {
             throw Exception<int>(16, idx_craft);
         }
-    }else{ // move item tool
+    }else if(this->isFilledTool(idx_craft)){ // move item tool
         if(myInv->getItemName(idx_inv[0]) != "-"){
             throw Exception<string>(4);
         }else{
             myInv->setItemTool(idx_inv[0], this->getItemTool(idx_craft).getID(), this->getItemTool(idx_craft).getName(), this->getItemTool(idx_craft).getDurability());
             this->deleteItemTool(idx_craft);
         }
+    }
+    //item not found
+    else {
+        throw Exception<int>(3, idx_craft);
     }
 
 }

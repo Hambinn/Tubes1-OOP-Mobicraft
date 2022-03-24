@@ -52,10 +52,12 @@ class Exception {
                     cout << "Error: Different tool items" << endl;
                 } else if(this->type==15){ // Craft table empty
                     cout << "Error: Crafting table is empty, nothing to craft" << endl;
-                } else if(this->type==16){ // Craft table empty
+                } else if(this->type==16){ // different item
                     cout << "Error: Different items in source and destination" << endl;
-                }
-        }
+                } else if(this->type==17){ // index out of bound
+                    cout << "index not found" << endl;
+        }          
+    }
 };
 
 #endif

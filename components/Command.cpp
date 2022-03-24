@@ -89,6 +89,9 @@ void Command::giveCommand(){
                 throw Exception<string>(11,commandParsed[0]);
             }
             this->commandParsed[1].erase(0,1);
+            if (stoi(this->commandParsed[1]) > 26){
+                throw Exception<string>(17, commandParsed[1]);
+            }
             inventory->discardItem(stoi(this->commandParsed[1]), stoi(this->commandParsed[2]));
 
         }else if(this->commandParsed[0] == "MOVE"){ // MOVE A N TO B
@@ -97,12 +100,19 @@ void Command::giveCommand(){
             }
             if(this->commandParsed[3][0] == 'C' && this->commandParsed[1][0] == 'I'){
                 this->commandParsed[1].erase(0,1);
+                if (stoi(this->commandParsed[1]) > 26){
+                    throw Exception<string>(17, commandParsed[1]);
+                }
                 int n = stoi(this->commandParsed[2]);
                 vector<int> slot;
                 for(int i=0;i<n;i++){
                     this->commandParsed[i+3].erase(0,1);
                     slot.push_back(stoi(this->commandParsed[i+3]));
+                    if (stoi(this->commandParsed[i+3]) > 8){
+                        throw Exception<string>(17, commandParsed[i+3]);
+                    }
                     // slot[i] = stoi(this->commandParsed[i+3]);
+
                 }
                 craft->moveItem(inventory,stoi(this->commandParsed[1]), n, slot);
             }else if(this->commandParsed[3][0] == 'I' && this->commandParsed[1][0] == 'C'){
@@ -110,6 +120,9 @@ void Command::giveCommand(){
                 vector<int> slot;
                 this->commandParsed[3].erase(0,1);
                 this->commandParsed[1].erase(0,1);
+                if (stoi(this->commandParsed[1]) > 8){
+                    throw Exception<string>(17, commandParsed[1]);
+                }
                 slot.push_back(stoi(this->commandParsed[3]));
                 int n = stoi(this->commandParsed[2]);
                 slot.push_back(stoi(this->commandParsed[1]));
