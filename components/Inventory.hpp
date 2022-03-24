@@ -21,6 +21,7 @@ public:
     bool isFilledTool(int idx);
     bool isFilledNonTool(int idx);
     string getItemName(int idx);
+    void isInvSlotIsNotEmpty(int idx);
 
     ItemNonTool getItemNonTool(int idx);
     void setItemNonTool(int idx, int t_id, string t_name, int t_Qty, string t_typ);

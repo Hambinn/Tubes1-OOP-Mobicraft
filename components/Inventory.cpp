@@ -56,6 +56,12 @@ string Inventory::getItemName(int idx){
     }
 }
 
+void Inventory::isInvSlotIsNotEmpty(int idx) {
+    if (!(this->isFilledNonTool(idx) || this->isFilledTool(idx))) {
+        throw Exception<int>(2,idx);
+    }
+}
+
 ItemNonTool Inventory::getItemNonTool(int idx){
     return this->getItem(idx).myNonTool;
 }

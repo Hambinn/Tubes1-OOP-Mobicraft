@@ -40,9 +40,11 @@ class Exception {
                     cout << "Error: unable to open " << this->getErrorElement() << " file" << endl;
                 } else if (this->type==9) { //"indexOutOfBound"
                     cout << "Error: you are trying to access index " << this->getErrorElement();
-                } else if (this->type==10) {
+                } else if (this->type==10) { //"unableToOpenFile"
                     cout << "Error: unable to open " << this->getErrorElement() << " file" << endl;
-                }
+                } else if (this->type==11) { // "command incorrect"
+                    cout << "Error: command " << this->getErrorElement() << " incorrect" << endl;
+                } 
         }
 };
 
