@@ -385,15 +385,12 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
     pair<string,int> result;
 
     allToolNonTool = this->getSumOfToolandNonTool();
-
     if(allToolNonTool["Tool"] != 0 && allToolNonTool["NonTool"] == 0){      //tool semua
         map<string,int> nameAndDurability;
         nameAndDurability = this->getNameAndDurabilityTool();
 
         if(nameAndDurability.size() != 1){
-            cout << "item tool berbeda, gabisa di craft" << endl;
-            result.first = "not found";
-            result.second = 0;
+            throw Exception<string>(14);
         }else{
             for (it = nameAndDurability.begin(); it != nameAndDurability.end(); it++) {
                 result.first = it->first;
@@ -409,7 +406,6 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
     }else if(allToolNonTool["NonTool"] != 0 && allToolNonTool["Tool"] == 0){        // nontool semua
         map<string,int> allType;
         allType = this->getSumOfType();
-
         int i = 0;
         string allTypeArray[allType.size()][2];
         map<string,int> type;
@@ -458,14 +454,15 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
             i++;
         }
         if(found == false){
-            result.first = "not found";
-            result.second = 0;
+            throw Exception<string>(13);
         }
 
     }else{
-        cout << "ada tool & nontoll, gatau harus apa :(" << endl;
-        result.first = "not found";
-        result.second = 0;
+        if(allToolNonTool["Tool"] == 0 && allToolNonTool["NonTool"] == 0){
+            throw Exception<string>(15);
+        }else{
+            throw Exception<string>(12);
+        }
     }
     return result;
 };

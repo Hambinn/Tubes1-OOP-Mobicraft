@@ -44,7 +44,15 @@ class Exception {
                     cout << "Error: unable to open " << this->getErrorElement() << " file" << endl;
                 } else if (this->type==11) { // "command incorrect"
                     cout << "Error: command " << this->getErrorElement() << " incorrect" << endl;
-                } 
+                } else if(this->type==12){ // tool & nontool item in crafting table
+                    cout << "Error: Crafting table contains Tool and Nontool items" << endl;
+                } else if(this->type==13){ // No matches between crafting table and recipe
+                    cout << "Error: No recipe matches the given items" << endl;
+                } else if(this->type==14){ // Different tools name when crafting
+                    cout << "Error: Different tool items" << endl;
+                } else if(this->type==15){ // Craft table empty
+                    cout << "Error: Crafting table is empty, nothing to craft" << endl;
+                }
         }
 };
 
