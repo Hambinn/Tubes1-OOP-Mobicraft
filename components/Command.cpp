@@ -155,6 +155,8 @@ void Command::giveCommand(){
                 throw Exception<string>(11,commandParsed[0]);
             }
             inventory->exportInventory(commandParsed[1]);
+        }else if (this->commandParsed[0] == "EXIT"){
+            //do nothing
         }else{
             this->command.clear();
             this->commandParsed.clear();

@@ -190,6 +190,8 @@ void Craft::moveItem(Inventory *myInv, int idx_inv, int N, vector<int> idx_craft
             }
         }catch(Exception<string> &exception){
             exception.printMessage();
+        }catch(Exception<int> &exception){
+            exception.printMessage();
         }
     }
     //Move Item Tool
