@@ -25,7 +25,7 @@ class Exception {
                 if (this->type==1){ //inventoryFull
                     cout << "Error: inventory is already full!" << endl;
                 } else if (this->type==2) { //itemToolNotAvailable
-                   cout << "Error: item tool in I"<< this->getErrorElement() <<  " is not available!";
+                   cout << "Error: item tool in I"<< this->getErrorElement() <<  " is not available!" << endl;
                 } else if (this->type==3) { //"itemNotAvailable"
                     cout << "Error: item in I" << this->getErrorElement() << " is not available!" << endl;
                 } else if (this->type==4) { //"giveQuantityNotOne"

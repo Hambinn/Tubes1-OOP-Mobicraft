@@ -116,7 +116,7 @@ void Craft::isCraftInvSlotEmpty(int N, vector<int> slot_idx){
     int i = 0;
     for (i; i < N; i++){
         if(this->getItem(slot_idx[i]).filled_NonTool != false || this->getItem(slot_idx[i]).filled_Tool != false){
-            throw new Exception<string>(7);
+            throw Exception<string>(7);
         }
     }
 };
@@ -187,8 +187,8 @@ void Craft::moveItem(Inventory *myInv, int idx_inv, int N, vector<int> idx_craft
                     myInv->deleteItemNonTool(idx_inv);
                 }
             }
-        }catch(const char* err){
-            cout << err << endl;
+        }catch(Exception<string> &exception){
+            exception.printMessage();
         }
     }
     //Move Item Tool
