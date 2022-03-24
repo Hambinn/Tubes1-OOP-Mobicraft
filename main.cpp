@@ -58,32 +58,6 @@ int main() {
     Inventory inventory;
     Craft craft;
 
-    // //BUAT KALO MALES ISI INVENTORY :D
-    // inventory.giveItem(listItemNonTool[0],50);
-    // inventory.giveItem(listItemNonTool[1],50);
-    // inventory.giveItem(listItemNonTool[2],50);
-    // inventory.giveItem(listItemNonTool[3],50);
-    // inventory.giveItem(listItemNonTool[4],50);
-    // inventory.giveItem(listItemNonTool[5],50);
-    // inventory.giveItem(listItemNonTool[6],50);
-    // inventory.giveItem(listItemNonTool[7],50);
-    // inventory.giveItem(listItemNonTool[8],50);
-    // inventory.giveItem(listItemNonTool[9],50);
-    // inventory.giveItem(listItemNonTool[10],50);
-    // inventory.giveItem(listItemNonTool[11],50);
-    // inventory.giveItem(listItemTool[0],1);
-    // inventory.giveItem(listItemTool[1],1);
-    // inventory.giveItem(listItemTool[2],1);
-    // inventory.giveItem(listItemTool[3],1);
-    // inventory.giveItem(listItemTool[4],1);
-    // inventory.giveItem(listItemTool[5],1);
-    // inventory.giveItem(listItemTool[6],1);
-    // inventory.giveItem(listItemTool[7],1);
-    // inventory.giveItem(listItemTool[8],1);
-    // inventory.giveItem(listItemTool[9],1);
-    // inventory.giveItem(listItemTool[10],1);
-    // inventory.giveItem(listItemTool[11],1);
-
     char commandString[100];
     cout << "Enter command:" << endl;
     cin.getline(commandString, 100);
