@@ -92,7 +92,7 @@ void Command::giveCommand(){
             inventory->discardItem(stoi(this->commandParsed[1]), stoi(this->commandParsed[2]));
 
         }else if(this->commandParsed[0] == "MOVE"){ // MOVE A N TO B
-            if(this->commandParsed.size() != 4){
+            if(this->commandParsed.size() < 4){
                 throw Exception<string>(11,commandParsed[0]);
             }
             if(this->commandParsed[3][0] == 'C' && this->commandParsed[1][0] == 'I'){

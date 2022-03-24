@@ -195,7 +195,7 @@ void Craft::moveItem(Inventory *myInv, int idx_inv, int N, vector<int> idx_craft
         }
     }
     //Move Item Tool
-    if (myInv->isFilledTool(idx_inv)){
+    else if (myInv->isFilledTool(idx_inv)){
         try{
             this->isCraftInvSlotEmpty(N, idx_craft);
             if (N == 1){
@@ -205,6 +205,10 @@ void Craft::moveItem(Inventory *myInv, int idx_inv, int N, vector<int> idx_craft
         }catch(const char* err){
             cout << err << endl;
         }
+    }
+    //item not found
+    else {
+        throw Exception<int>(3, idx_inv);
     }
 }
 

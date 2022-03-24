@@ -52,6 +52,8 @@ class Exception {
                     cout << "Error: Different tool items" << endl;
                 } else if(this->type==15){ // Craft table empty
                     cout << "Error: Crafting table is empty, nothing to craft" << endl;
+                } else if(this->type==16){ // Craft table empty
+                    cout << "Error: Different items in source and destination" << endl;
                 }
         }
 };

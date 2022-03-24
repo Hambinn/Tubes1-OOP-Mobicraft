@@ -235,6 +235,8 @@ void Inventory::discardItem(int idx, int Qty){
 void Inventory::moveItem(int src, int dest){
     if (this->getItemName(src) == "-" || this->getItemName(dest) == "-"){
         throw Exception<int>(3, src);
+    } else if (this->getItemName(src) != this->getItemName(dest)){
+        throw Exception<int>(16, src);
     } else {
         int Qty1 = this->getItem(src).myNonTool.getQuantity();
         int Qty2 = this->getItem(dest).myNonTool.getQuantity();
