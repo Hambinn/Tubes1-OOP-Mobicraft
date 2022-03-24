@@ -219,10 +219,12 @@ void Craft::moveItemBack(Inventory *myInv, int idx_craft, int N, vector<int> idx
         if(myInv->getItemNonTool(idx_inv[0]).getName() == "-"){
             myInv->setItemNonTool(idx_inv[0],this->getItemNonTool(idx_craft).getID(), this->getItemNonTool(idx_craft).getName(), 1, this->getItemNonTool(idx_craft).getType());
             this->deleteItemNonTool(idx_craft);
-        }else{
+        }else if (this->getItemName(idx_craft) == myInv->getItemNonTool(idx_inv[0]).getName()){
             int newQty = myInv->getItem(idx_inv[0]).myNonTool.getQuantity() + 1;
             myInv->setQtyItemNonTool(idx_inv[0], newQty);
             this->deleteItemNonTool(idx_craft);
+        } else {
+            throw Exception<int>(16, idx_craft);
         }
     }else{ // move item tool
         if(myInv->getItemName(idx_inv[0]) != "-"){
