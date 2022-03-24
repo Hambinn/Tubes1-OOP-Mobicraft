@@ -60,9 +60,15 @@ void Command::giveCommand(){
     // cout << getCommandName() << endl;
     try{
         if(this->commandParsed[0] == "SHOW"){ //SHOW
+            if(this->commandParsed.size() != 1){
+                throw Exception<string>(11,commandParsed[0]);
+            }
             craft->showItem();
             inventory->showItem();
         }else if(this->commandParsed[0] == "GIVE"){ // GIVE A N
+            if(this->commandParsed.size() != 3){
+                throw Exception<string>(11,commandParsed[0]);
+            }
             for(int i = 0;i<this->listItemNonTool.size();i++){
                 if(this->listItemNonTool[i].Name == this->commandParsed[1]){
                     inventory->giveItem(this->listItemNonTool[i], stoi(this->commandParsed[2]));
@@ -79,10 +85,16 @@ void Command::giveCommand(){
             }
             
         }else if(this->commandParsed[0] == "DISCARD"){ // DISCARD A N
+            if(this->commandParsed.size() != 3){
+                throw Exception<string>(11,commandParsed[0]);
+            }
             this->commandParsed[1].erase(0,1);
             inventory->discardItem(stoi(this->commandParsed[1]), stoi(this->commandParsed[2]));
 
         }else if(this->commandParsed[0] == "MOVE"){ // MOVE A N TO B
+            if(this->commandParsed.size() != 4){
+                throw Exception<string>(11,commandParsed[0]);
+            }
             if(this->commandParsed[3][0] == 'C' && this->commandParsed[1][0] == 'I'){
                 this->commandParsed[1].erase(0,1);
                 int n = stoi(this->commandParsed[2]);
@@ -106,11 +118,19 @@ void Command::giveCommand(){
                 this->commandParsed[1].erase(0,1);
                 this->commandParsed[3].erase(0,1);
                 inventory->moveItem(stoi(this->commandParsed[1]), stoi(this->commandParsed[3]));
+            }else{
+                throw Exception<string>(11,commandParsed[0]);
             }
         }else if(this->commandParsed[0] == "USE"){
+            if(this->commandParsed.size() != 2){
+                throw Exception<string>(11,commandParsed[0]);
+            }
             this->commandParsed[1].erase(0,1);
             this->inventory->useItem(stoi(this->commandParsed[1]));
         }else if(this->commandParsed[0] == "CRAFT"){
+            if(this->commandParsed.size() != 1){
+                throw Exception<string>(11,commandParsed[0]);
+            }
             pair<string,int> hasilCraft;
             hasilCraft = craft->Crafting(this->resep);
             bool found = false;
@@ -132,7 +152,14 @@ void Command::giveCommand(){
                 }
             }
         }else if(this->commandParsed[0] == "EXPORT"){
+            if(this->commandParsed.size() != 2){
+                throw Exception<string>(11,commandParsed[0]);
+            }
             inventory->exportInventory(commandParsed[1]);
+        }else{
+            this->command.clear();
+            this->commandParsed.clear();
+            throw Exception<string>(11,commandParsed[0]);
         }
         this->command.clear();
         this->commandParsed.clear();
