@@ -133,6 +133,7 @@ void Command::giveCommand(){
             }
             pair<string,int> hasilCraft;
             hasilCraft = craft->Crafting(this->resep);
+            cout << hasilCraft.first << " " << hasilCraft.second << endl;
             bool found = false;
             
             for (int i = 0; i < listItemTool.size(); i++){
@@ -145,8 +146,6 @@ void Command::giveCommand(){
                 for (int i = 0; i < listItemNonTool.size(); i++){
                     if (listItemNonTool[i].getName() == hasilCraft.first){
                         inventory->giveItem(listItemNonTool[i], hasilCraft.second);
-                        inventory->showItem();
-                        craft->showItem();
                         found = true;
                     }
                 }
@@ -164,10 +163,8 @@ void Command::giveCommand(){
         this->command.clear();
         this->commandParsed.clear();
     }catch (Exception<int> &exception) {
-        cout << "berhasil catch 1" << endl;
         exception.printMessage();
     } catch (Exception<string> &exception) {
-        cout << "berhasil catch 2" << endl;
         exception.printMessage();
     }
 }
