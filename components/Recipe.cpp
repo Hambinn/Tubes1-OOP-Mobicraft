@@ -106,7 +106,7 @@ string Recipe::get_item(int row, int col) const{
 }
 
 string Recipe::get_item_mirror(int row, int col) const{
-    int idxm = this->col-col-1+(row*this->col);
+    int idxm = col+row*this->col;
     return this->itemsMirror[idxm];
 }
 
