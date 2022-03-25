@@ -1,26 +1,36 @@
-# Minecraft-Template
+# Mobicraft
+> A CLI-based program to implement crafting in Minecraft game using C++ language.
 
-Template repository for Tubes 1 IF2210 2021/2022. Feel free to replace this README with your own content.
+## Table of Contents
+* [Technologies Used](#technologies-used)
+* [Setup](#setup)
+* [Usage](#usage)
+* [Project Status](#project-status)
+* [Contributors](#contributors)
 
-## What's Inside
-This template consists of:
-- config folder containing all the config files (items and recipes)
-- tests folder containing two sample test files (input and answer)
-- main.cpp containing the sample main code
-- check.cpp containing the code for checking
-- makefile for compiling and testing
 
-## Running the Makefile
-Make sure you are using Linux with C++17. WSL also works if you are using Windows.
-```
-sudo apt-get install make g++
-make all
-```
-Using the sample main file, it should return that 1 out of 2 tests passed.
+## Technologies Used
+- C++
 
-## Adding More Tests
-You can add more tests by adding more files to the tests folder. Tests consists of two files, input with "in" extension and answer with "ans" extension. Each test should have exactly one EXPORT command which exports the current inventory into an "out" file in the tests folder. Please refer to the sample tests. Checking will be done by comparing the answer file and the output file.
 
-As the test is done by comparing the output files, you can freely use standard output in your program.
+## Setup
+To compile the program, make sure you are using Linux with C++17. WSL also works if you are using Windows. You can also install makefile in windows using choco by running `choco install make`in your command line. 
 
-Automated testing will not work if you are using GUI (obviously).
+
+## Usage
+1. Clone this repository (first use only)
+2. Open command line and change directory to local folder repository
+3. Write `make mobicraft` to compile the program
+4. Run main.exe by clicking the executable file or write `./main` in command line
+
+
+## Project Status
+Project is: _complete_
+
+
+## Conributors
+- 13520027 / Farhan Hafiz
+- 13520045 / Addin Nabilal Huda
+- 13520096 / Monica Adelia
+- 13520102 / Ilham Bintang Nurmansyah
+- 13520150 / Haidar Ihzaulhaq
