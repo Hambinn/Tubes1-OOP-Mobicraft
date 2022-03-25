@@ -11,6 +11,6 @@ all: compile test check
 
 FORCE: ;
 
-mobita:
+mobicraft:
 	g++ -std=c++17 -o $(EXECUTABLE_FILENAME) $(SRCS)
 	./${EXECUTABLE_FILENAME} 
