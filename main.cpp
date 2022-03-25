@@ -46,6 +46,14 @@ void readItems(vector<ItemNonTool> *itemsNT, vector<ItemTool> *itemsT, string fi
     itemConfigaFile.close();
 }
 
+void printMobicraft() {
+    cout << "              _     _                 __ _   " << endl;
+    cout << "  /\\/\\   ___ | |__ (_) ___ _ __ __ _ / _| |_ " << endl;
+    cout << " /    \\ / _ \\| '_ \\| |/ __| '__/ _` | |_| __|" << endl;
+    cout << "/ /\\/\\ \\ (_) | |_) | | (__| | | (_| |  _| |_ " << endl;
+    cout << "\\/    \\/\\___/|_.__/|_|\\___|_|  \\__,_|_|  \\__|" << endl;
+}
+
 int main() {
     string configPath = "./config";
     string itemConfigPath = configPath + "/item.txt";
@@ -58,6 +66,7 @@ int main() {
     Inventory inventory;
     Craft craft;
 
+    printMobicraft();
     char commandString[100];
     cout << "Enter command:" << endl;
     cin.getline(commandString, 100);
