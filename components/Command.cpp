@@ -95,10 +95,10 @@ void Command::giveCommand(){
             inventory->discardItem(stoi(this->commandParsed[1]), stoi(this->commandParsed[2]));
 
         }else if(this->commandParsed[0] == "MOVE"){ // MOVE A N TO B
-            if(this->commandParsed.size() < 4){
-                throw Exception<string>(11,commandParsed[0]);
-            }
             if(this->commandParsed[3][0] == 'C' && this->commandParsed[1][0] == 'I'){
+                if(this->commandParsed.size() != stoi(this->commandParsed[2]) + 3){
+                    throw Exception<string>(11,commandParsed[0]);
+                }
                 this->commandParsed[1].erase(0,1);
                 if (stoi(this->commandParsed[1]) > 26){
                     throw Exception<string>(17, commandParsed[1]);
@@ -111,12 +111,12 @@ void Command::giveCommand(){
                     if (stoi(this->commandParsed[i+3]) > 8){
                         throw Exception<string>(17, commandParsed[i+3]);
                     }
-                    // slot[i] = stoi(this->commandParsed[i+3]);
-
                 }
                 craft->moveItem(inventory,stoi(this->commandParsed[1]), n, slot);
             }else if(this->commandParsed[3][0] == 'I' && this->commandParsed[1][0] == 'C'){
-                // belom di implemen
+                if(this->commandParsed.size() != 4){
+                    throw Exception<string>(11,commandParsed[0]);
+                }
                 vector<int> slot;
                 this->commandParsed[3].erase(0,1);
                 this->commandParsed[1].erase(0,1);
@@ -128,6 +128,9 @@ void Command::giveCommand(){
                 slot.push_back(stoi(this->commandParsed[1]));
                 craft->moveItemBack(inventory,stoi(this->commandParsed[1]),n, slot);
             }else if(this->commandParsed[3][0] == 'I' && this->commandParsed[1][0] == 'I'){
+                if(this->commandParsed.size() != 4){
+                throw Exception<string>(11,commandParsed[0]);
+                }
                 this->commandParsed[1].erase(0,1);
                 this->commandParsed[3].erase(0,1);
                 inventory->moveItem(stoi(this->commandParsed[1]), stoi(this->commandParsed[3]));
