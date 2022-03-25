@@ -154,8 +154,9 @@ void Command::giveCommand(){
             
             for (int i = 0; i < listItemTool.size(); i++){
                 if (listItemTool[i].getName() == hasilCraft.first){
-                    inventory->giveItem(listItemTool[i], 1, hasilCraft.second);
+                    inventory->giveItem(listItemTool[i], hasilCraft.second, 10);
                     found = true;
+
                 }
             }
             if(!found){
