@@ -12,6 +12,7 @@
 #include "Exception.hpp"
 using namespace std;
 
+
 Command::Command(string s, Inventory* i, Craft* c, vector<ItemNonTool> listItemNonTool, vector<ItemTool> listItemTool,ListRecipe* l) {
     this->command = s;
     this->commandParsed = parseCommand(command);
@@ -113,6 +114,7 @@ void Command::giveCommand(){
                     }
                 }
                 craft->moveItem(inventory,stoi(this->commandParsed[1]), n, slot);
+                displayMove();
             }else if(this->commandParsed[3][0] == 'I' && this->commandParsed[1][0] == 'C'){
                 if(this->commandParsed.size() != 4){
                     throw Exception<string>(11,commandParsed[0]);
@@ -172,7 +174,7 @@ void Command::giveCommand(){
             }
             inventory->exportInventory(commandParsed[1]);
         }else if (this->commandParsed[0] == "EXIT"){
-            //do nothing
+            displayEndProgram();
         }else{
             this->command.clear();
             this->commandParsed.clear();
@@ -187,3 +189,45 @@ void Command::giveCommand(){
     }
 }
 
+void Command::displayCrafting() {
+    cout << "                  @@@@@@@               " << endl;
+    cout << "                    @@     @            " << endl;
+    cout << "                      @      @          " << endl;
+    cout << "                     @@       @@@       " << endl;
+    cout << "                   @    @@@      @      " << endl;
+    cout << "                @@   @@    @@  @        " << endl;
+    cout << "              @@   @,                   " << endl;
+    cout << "            @    @                      " << endl;
+    cout << "          @    @                        " << endl;
+    cout << "       /@    @                          " << endl;
+    cout << "       @  @@                            " << endl;
+}
+
+void Command::displayMove() {
+    cout << "        @@@        " << endl;
+    cout << "        @@((@@      " << endl;
+    cout << "@@@@@@@@@@((((@@    " << endl;
+    cout << "@@(((((((((((((((@@ " << endl;
+    cout << "@@((((((((((((((((@@" << endl;
+    cout << "@@&&&&&&&&((((((@@  " << endl;
+    cout << "        @@(((@@     " << endl;
+    cout << "        @@&@        " << endl;
+}
+
+void Command::displayEndProgram() {
+    cout << "██████████" << endl;
+    cout << "█░░░░░░░░█" << endl;
+    cout << "█░██░░██░█" << endl;
+    cout << "█░░░██░░░█" << endl;
+    cout << "█░░████░░█" << endl;
+    cout << "█░░█░░█░░█" << endl;
+    cout << "█░░░░░░░░█" << endl;
+    cout << "██████████" << endl;
+    cout << "──█░░░░█" << endl;
+    cout << "──█░░░░█" << endl;
+    cout << "──█░░░░█" << endl;
+    cout << "██████████" << endl;
+    cout << "█░░░██░░░█" << endl;
+    cout << "█░░░██░░░█" << endl;
+    cout << "█▄█▄██▄█▄█" << endl;
+}

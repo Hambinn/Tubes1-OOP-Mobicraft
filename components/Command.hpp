@@ -27,4 +27,7 @@ class Command{
         vector<string> parseCommand(string command);
         void giveCommand();
         string getCommandName();
+        void displayCrafting();
+        void displayMove();
+        void displayEndProgram();
 };
