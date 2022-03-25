@@ -138,6 +138,7 @@ void Inventory::showItem(){
 
 void Inventory::giveItem(ItemNonTool itemNT, int Qty){
     bool found = false;
+    bool full = true;
     int idx = 0;
     if (Qty > 0 && Qty <= 64){
 
@@ -147,7 +148,20 @@ void Inventory::giveItem(ItemNonTool itemNT, int Qty){
                 found = true;
                 idx = i;
                 break;
+            } 
+        }
+        for (int i=0; i<MAX_Inventory; i++){
+            if (this->getItemName(i) == "-"){
+                full = false;
+                break;
+            } else if (this->isFilledNonTool(i) && this->getItemName(i) == itemNT.getName() && this->getItemNonTool(i).getQuantity() + Qty < 64){
+                full = false;
+                break;
             }
+        }
+
+        if (full){
+            throw Exception<int>(1,idx);
         }
 
         //Jika ada, tambah Qty pada item tersebut
@@ -182,6 +196,16 @@ void Inventory::giveItem(ItemNonTool itemNT, int Qty){
     }
 }
 void Inventory::giveItem(ItemTool itemT, int Qty){
+    bool full = true;
+    for (int i=0; i<MAX_Inventory; i++){
+        if (this->getItemName(i) == "-"){
+            full = false;
+            break;
+        } 
+    }
+    if (full){
+        throw Exception<int>(1,Qty);
+    }
     if (Qty == 1){
         int i = 0;
         while (this->getItemName(i) != "-")
