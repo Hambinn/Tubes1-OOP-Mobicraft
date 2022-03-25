@@ -29,5 +29,4 @@ class Command{
         string getCommandName();
         void displayCrafting();
         void displayMove();
-        void displayEndProgram();
 };

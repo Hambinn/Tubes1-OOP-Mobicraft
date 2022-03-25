@@ -156,9 +156,13 @@ void Command::giveCommand(){
             
             for (int i = 0; i < listItemTool.size(); i++){
                 if (listItemTool[i].getName() == hasilCraft.first){
-                    inventory->giveItem(listItemTool[i], hasilCraft.second, 10);
-                    found = true;
-
+                    if(hasilCraft.second != 1){
+                        inventory->giveItem(listItemTool[i], 1, hasilCraft.second);
+                        found = true;
+                    }else{
+                        inventory->giveItem(listItemTool[i], hasilCraft.second, 10);
+                        found = true;
+                    }
                 }
             }
             if(!found){
@@ -175,7 +179,7 @@ void Command::giveCommand(){
             }
             inventory->exportInventory(commandParsed[1]);
         }else if (this->commandParsed[0] == "EXIT"){
-            displayEndProgram();
+            // do nothing
         }else{
             this->command.clear();
             this->commandParsed.clear();
@@ -213,22 +217,4 @@ void Command::displayMove() {
     cout << "@@&&&&&&&&((((((@@  " << endl;
     cout << "        @@(((@@     " << endl;
     cout << "        @@&@        " << endl;
-}
-
-void Command::displayEndProgram() {
-    cout << "██████████" << endl;
-    cout << "█░░░░░░░░█" << endl;
-    cout << "█░██░░██░█" << endl;
-    cout << "█░░░██░░░█" << endl;
-    cout << "█░░████░░█" << endl;
-    cout << "█░░█░░█░░█" << endl;
-    cout << "█░░░░░░░░█" << endl;
-    cout << "██████████" << endl;
-    cout << "──█░░░░█" << endl;
-    cout << "──█░░░░█" << endl;
-    cout << "──█░░░░█" << endl;
-    cout << "██████████" << endl;
-    cout << "█░░░██░░░█" << endl;
-    cout << "█░░░██░░░█" << endl;
-    cout << "█▄█▄██▄█▄█" << endl;
 }
