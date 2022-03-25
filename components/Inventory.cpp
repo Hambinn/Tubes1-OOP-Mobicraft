@@ -269,7 +269,13 @@ void Inventory::discardItem(int idx, int Qty){
 //Move Item dari Inventory ke Inventory
 void Inventory::moveItem(int src, int dest){
     if (src <= 26 && dest <= 26){
-        if (this->getItemName(src) == "-" || this->getItemName(dest) == "-"){
+        if (this->isFilledTool(src) || this->isFilledTool(dest)){
+            if (this->isFilledTool(src) ){
+                throw Exception<int>(18, src);
+            } else if (this->isFilledTool(dest)){
+                throw Exception<int>(18, dest);
+            }
+        } else if (this->getItemName(src) == "-" || this->getItemName(dest) == "-"){
             if (this->getItemName(src) == "-"){
                 throw Exception<int>(3, src);
             } else if (this->getItemName(dest) == "-"){

@@ -56,7 +56,9 @@ class Exception {
                     cout << "Error: Different items in source and destination" << endl;
                 } else if(this->type==17){ // index out of bound
                     cout << "index not found" << endl;
-        }          
+                }  else if (this->type==18) { // "item tool can't move"
+                    cout << "Error: item in " << this->getErrorElement() << " is item tool" << endl;
+                }      
     }
 };
 
