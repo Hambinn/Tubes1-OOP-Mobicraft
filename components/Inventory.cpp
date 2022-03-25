@@ -195,6 +195,7 @@ void Inventory::giveItem(ItemNonTool itemNT, int Qty){
         giveItem(itemNT,Qty_1);
     }
 }
+
 void Inventory::giveItem(ItemTool itemT, int Qty){
     bool full = true;
     for (int i=0; i<MAX_Inventory; i++){
@@ -223,6 +224,16 @@ void Inventory::giveItem(ItemTool itemT, int Qty){
 }
 
 void Inventory::giveItem(ItemTool itemT, int Qty, int t_Dty){
+    bool full = true;
+    for (int i=0; i<MAX_Inventory; i++){
+        if (this->getItemName(i) == "-"){
+            full = false;
+            break;
+        } 
+    }
+    if (full){
+        throw Exception<int>(1,Qty);
+    }
     if (Qty == 1){
         int i = 0;
         while (this->getItemName(i) != "-")
@@ -238,6 +249,8 @@ void Inventory::giveItem(ItemTool itemT, int Qty, int t_Dty){
         throw Exception<string>(4);
     }
 }
+
+
 
 void Inventory::discardItem(int idx, int Qty){
     //discard Item Non Tool

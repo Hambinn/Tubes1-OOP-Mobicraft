@@ -603,6 +603,16 @@ void Craft::giveItemHasilCrafting(Inventory* myInv, ItemTool itemT, int Qty){
 }
 
 void Craft::giveItemHasilCrafting(Inventory* myInv, ItemTool itemT, int Qty, int t_Dty){
+    bool full = true;
+    for (int i=0; i<MAX_Inventory; i++){
+        if (myInv->getItemName(i) == "-"){
+            full = false;
+            break;
+        } 
+    }
+    if (full){
+        throw Exception<int>(1,Qty);
+    }
     if (Qty == 1){
         int i = 0;
         while (myInv->getItemName(i) != "-")
@@ -619,3 +629,4 @@ void Craft::giveItemHasilCrafting(Inventory* myInv, ItemTool itemT, int Qty, int
         throw Exception<string>(4);
     }
 }
+
