@@ -412,12 +412,12 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
             for (it = nameAndDurability.begin(); it != nameAndDurability.end(); it++) {
                 result.first = it->first;
                 if(it->second > 10){
-                    result.second = 10;
+                    result.second = 110;
                 }else{
-                    result.second = it->second;
+                    result.second = 100 + it->second;
                 }
             }
-            this->deleteAllItem();
+            //this->deleteAllItem();
         }
 
     }else if(allToolNonTool["NonTool"] != 0 && allToolNonTool["Tool"] == 0){        // nontool semua
@@ -453,13 +453,13 @@ pair<string,int> Craft::Crafting(ListRecipe *resep){
             }
             if(found == true){
                 if(this->findKecocokanRecipe(resep, i) == true){
-                    this->deleteAllItem();
+                    //this->deleteAllItem();
                     result.first = resep->get_recipe(i).get_result();
                     result.second = resep->get_recipe(i).get_num_of_result();
                     break;
                 }else{
                     if(this->findKecocokanRecipeMirrored(resep, i) == true){
-                        this->deleteAllItem();
+                        //this->deleteAllItem();
                         result.first = resep->get_recipe(i).get_result();
                         result.second = resep->get_recipe(i).get_num_of_result();
                         break;
@@ -510,5 +510,112 @@ void Craft::showItem(){
                 cout << endl;
             }
         }
+    }
+}
+
+void Craft::giveItemHasilCrafting(Inventory* myInv, ItemNonTool itemNT, int Qty){
+    bool found = false;
+    bool full = true;
+    int idx = 0;
+    if (Qty > 0 && Qty <= 64){
+
+        //Cek apakah item dengan nama "Name" sudah ada di inventory
+        for (int i=0; i<MAX_Inventory; i++){
+            if(myInv->getItemName(i) == itemNT.getName() && myInv->getItemNonTool(i).getQuantity() < 64 ){
+                found = true;
+                idx = i;
+                break;
+            } 
+        }
+        for (int i=0; i<MAX_Inventory; i++){
+            if (myInv->getItemName(i) == "-"){
+                full = false;
+                break;
+            } else if (myInv->isFilledNonTool(i) && myInv->getItemName(i) == itemNT.getName() && myInv->getItemNonTool(i).getQuantity() + Qty < 64){
+                full = false;
+                break;
+            }
+        }
+
+        if (full){
+            throw Exception<int>(1,idx);
+        }
+
+        //Jika ada, tambah Qty pada item tersebut
+        if(found){
+            int newQty = myInv->getItem(idx).myNonTool.getQuantity() + Qty;
+            if (newQty <= 64){
+                myInv->setItemNonTool(idx, itemNT.getID(), itemNT.getName(), newQty, itemNT.getType());
+                this->deleteAllItem();
+            } else {
+                myInv->setItemNonTool(idx, itemNT.getID(), itemNT.getName(), 64, itemNT.getType());
+                int newQty_1 = newQty - 64;
+                giveItemHasilCrafting(myInv, itemNT, newQty_1);
+            }
+            
+
+        //Jika tidak, buat item baru pada inventory dengan indeks terkecil
+        } else {
+            int i = 0;
+            while (myInv->getItemName(i) != "-")
+            {
+                i++;
+            }
+            if (i >= 0 && i < 27){
+                myInv->setItemNonTool(i,itemNT.getID(), itemNT.getName(), Qty, itemNT.getType());
+                this->deleteAllItem();
+            } else {
+                throw new Exception<string>(1);
+            }
+        }
+    } else {
+        int Qty_1 = Qty - 64;
+        giveItemHasilCrafting(myInv, itemNT, 64);
+        giveItemHasilCrafting(myInv, itemNT,Qty_1);
+    }
+}
+void Craft::giveItemHasilCrafting(Inventory* myInv, ItemTool itemT, int Qty){
+    bool full = true;
+    for (int i=0; i<MAX_Inventory; i++){
+        if (myInv->getItemName(i) == "-"){
+            full = false;
+            break;
+        } 
+    }
+    if (full){
+        throw Exception<int>(1,Qty);
+    }
+    if (Qty == 1){
+        int i = 0;
+        while (myInv->getItemName(i) != "-")
+        {
+            i++;
+        }
+        if (i >= 0 && i < 27){
+            myInv->setItemTool(i, itemT.getID(), itemT.getName(), 10);
+            this->deleteAllItem();
+        } else {
+            throw Exception<string>(1);
+        }
+    } else {
+        throw Exception<string>(4);
+    }
+}
+
+void Craft::giveItemHasilCrafting(Inventory* myInv, ItemTool itemT, int Qty, int t_Dty){
+    if (Qty == 1){
+        int i = 0;
+        while (myInv->getItemName(i) != "-")
+        {
+            i++;
+        }
+        if (i >= 0 && i < 27){
+            myInv->setItemTool(i, itemT.getID(), itemT.getName(), t_Dty);
+            this->deleteAllItem();
+        } else {
+            throw Exception<string>(1);
+        }
+    } else {
+        throw Exception<string>(4);
     }
 }

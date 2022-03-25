@@ -53,7 +53,9 @@ public :
     bool findKecocokanRecipeMirrored(ListRecipe *resep, int idx_recipe);
     pair<string,int> Crafting(ListRecipe *resep);
     void showItem();
-
+    void giveItemHasilCrafting(Inventory* myInv, ItemNonTool itemNT, int Qty);
+    void giveItemHasilCrafting(Inventory* myInv, ItemTool itemT, int Qty);
+    void giveItemHasilCrafting(Inventory* myInv, ItemTool itemT, int Qty, int t_Dty);
 
 };
 

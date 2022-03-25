@@ -58,7 +58,9 @@ class Exception {
                     cout << "index not found" << endl;
                 }  else if (this->type==18) { // "item tool can't move"
                     cout << "Error: item in " << this->getErrorElement() << " is item tool" << endl;
-                }      
+                }  else if (this->type==19) { // Couldnt find item
+                    cout << "Error: Couldnt find item name in item.txt " << endl;
+                }
     }
 };
 

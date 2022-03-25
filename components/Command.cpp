@@ -70,19 +70,23 @@ void Command::giveCommand(){
             if(this->commandParsed.size() != 3){
                 throw Exception<string>(11,commandParsed[0]);
             }
+            bool found = false;
             for(int i = 0;i<this->listItemNonTool.size();i++){
                 if(this->listItemNonTool[i].Name == this->commandParsed[1]){
                     inventory->giveItem(this->listItemNonTool[i], stoi(this->commandParsed[2]));
+                    found = true;
                     break;
-                    cout << "\nTidak ada Item yang cocok" << endl;
                 }
             }
             for(int i = 0;i<this->listItemTool.size();i++){
                 if(this->listItemTool[i].Name == this->commandParsed[1]){
                     inventory->giveItem(this->listItemTool[i], stoi(this->commandParsed[2]));
+                    found = true;
                     break;
-                    cout << "\nTidak ada Item yang cocok" << endl;
                 }
+            }
+            if(found == false){
+                throw Exception<string>(19);
             }
             
         }else if(this->commandParsed[0] == "DISCARD"){ // DISCARD A N
@@ -151,16 +155,16 @@ void Command::giveCommand(){
             }
             pair<string,int> hasilCraft;
             hasilCraft = craft->Crafting(this->resep);
-            cout << hasilCraft.first << " " << hasilCraft.second << endl;
             bool found = false;
             
             for (int i = 0; i < listItemTool.size(); i++){
                 if (listItemTool[i].getName() == hasilCraft.first){
-                    if(hasilCraft.second != 1){
-                        inventory->giveItem(listItemTool[i], 1, hasilCraft.second);
+                    if(hasilCraft.second > 100){
+                        hasilCraft.second = hasilCraft.second - 100;
+                        craft->giveItemHasilCrafting(inventory, listItemTool[i], 1, hasilCraft.second);
                         found = true;
                     }else{
-                        inventory->giveItem(listItemTool[i], hasilCraft.second, 10);
+                        craft->giveItemHasilCrafting(inventory, listItemTool[i], hasilCraft.second, 10);
                         found = true;
                     }
                 }
@@ -168,7 +172,7 @@ void Command::giveCommand(){
             if(!found){
                 for (int i = 0; i < listItemNonTool.size(); i++){
                     if (listItemNonTool[i].getName() == hasilCraft.first){
-                        inventory->giveItem(listItemNonTool[i], hasilCraft.second);
+                        craft->giveItemHasilCrafting(inventory, listItemNonTool[i], hasilCraft.second);
                         found = true;
                     }
                 }
