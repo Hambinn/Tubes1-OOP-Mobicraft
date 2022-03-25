@@ -133,6 +133,7 @@ void Command::giveCommand(){
                 int n = stoi(this->commandParsed[2]);
                 slot.push_back(stoi(this->commandParsed[1]));
                 craft->moveItemBack(inventory,stoi(this->commandParsed[1]),n, slot);
+                displayMove();
             }else if(this->commandParsed[3][0] == 'I' && this->commandParsed[1][0] == 'I'){
                 if(this->commandParsed.size() != 4){
                 throw Exception<string>(11,commandParsed[0]);
@@ -140,6 +141,7 @@ void Command::giveCommand(){
                 this->commandParsed[1].erase(0,1);
                 this->commandParsed[3].erase(0,1);
                 inventory->moveItem(stoi(this->commandParsed[1]), stoi(this->commandParsed[3]));
+                displayMove();
             }else{
                 throw Exception<string>(11,commandParsed[0]);
             }
@@ -177,6 +179,7 @@ void Command::giveCommand(){
                     }
                 }
             }
+            displayCrafting();
         }else if(this->commandParsed[0] == "EXPORT"){
             if(this->commandParsed.size() != 2){
                 throw Exception<string>(11,commandParsed[0]);
